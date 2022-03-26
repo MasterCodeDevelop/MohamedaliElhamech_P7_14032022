@@ -1,13 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+
 const path = require('path');
 
 require('dotenv').config();
-require('./db/mongoose')
 
+let connection = require('./config/db');
 const sauceRoutes = require('./routes/sauce');
 const authRoutes = require('./routes/auth');
+
+
 
 
 const app = express();

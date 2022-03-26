@@ -58,20 +58,34 @@ const NoPage = () => {
 };
 
 export default function App() {
-  var user = {};
 
-  console.log(user)
+  var user = {state:null, setState:null}; [user.state, user.setState] = useState({});
+  var api = {state:null, setState:null}; [api.state, api.setState] = useState({url: 'http://localhost:3000'});
+  var master = {
+    api: api,
+    user: user
+  }
+  console.log()
   return (
     <BrowserRouter>
+      {(user.state.token === undefined || user.state.token === '')?
       <Routes>
-          <Route index element={<Home />} />
-          <Route path="blogs" element={<Blogs />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="home" element={<Home />} />
-          <Route path="login" element={<Login />} />
+          <Route index element={<Login master={master} />} />
+          <Route path="login" element={<Login master={master} />} />
           <Route path="signup" element={<Signup />} />
           <Route path="*" element={<NoPage />} />
       </Routes>
+
+      :<Routes>
+        <Route index element={<Home />} />
+        <Route path="blogs" element={<Blogs />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="home" element={<Home master={master} />} />
+        <Route path="login" element={<Login master={master} />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="*" element={<NoPage />} />
+      </Routes>
+    }
     </BrowserRouter>
   );
 }

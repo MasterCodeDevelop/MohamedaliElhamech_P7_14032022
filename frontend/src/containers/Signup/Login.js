@@ -9,22 +9,22 @@ export default function Signup() {
         <h1>Signup</h1>
 
         <div className='form-group' >
-          <lable for="name">name</lable>
+          <label htmlFor='name'>name</label>
           <input id="name" type="text" ></input>
         </div>
 
         <div className='form-group' >
-          <lable for="firstName">first name</lable>
+          <label htmlFor="firstName">first name</label>
           <input id="firstName" type="text" ></input>
         </div>
 
         <div className='form-group' >
-          <lable for="email">Email</lable>
+          <label htmlFor="email" >Email</label>
           <input id="email" type="email" ></input>
         </div>
 
         <div className='form-group' >
-          <lable for="password" >Password</lable>
+          <label htmlFor="password" >Password</label>
           <input id="password" type="password" name='password' ></input>
         </div>
         <button type='submit' >Login</button>
