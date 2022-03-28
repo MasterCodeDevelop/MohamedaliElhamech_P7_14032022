@@ -1,20 +1,24 @@
-@import './base/index.scss'; /* comment {
+@import './base'; /* comment {
     base (all base styles)
     fonts
 } */
-@import './utils/index.scss'; /* comment {
+@import './utils'; /* comment {
     variables
     /keyframes ...
 } */
-@import './container/index';/* comment: {
+@import './container';  /* comment: {
     form
     
 } */
-@import './components/index'; /* comment: {
+@import './layouts'; /* comment: 
+    header
+    footer
+ */
+@import './components'; /* comment: {
     login
     signin
 } */
-@import './pages/index'; /* comment: {
+@import './pages'; /* comment: {
     login
     signin
 } */

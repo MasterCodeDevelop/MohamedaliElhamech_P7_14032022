@@ -3,10 +3,11 @@ import {
   useNavigate,
   Link
 } from "react-router-dom";
+import { API_URL } from '../utils';
 import { Cookie } from '../functions';
 
-export default function Login({master}) {
-  const URL_API = master.api.state.url+'/api/auth/login';
+export default function Login() {
+  const URL_API = API_URL+'/api/auth/login';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,19 +16,11 @@ export default function Login({master}) {
    function response (data) {
     
     if(data.id && data.token){
-      master.user.setState({
-        id: data.id,
-        token: data.token
-      })
+
       Cookie.set('id',data.id,1);
       Cookie.set('token',data.token,1);
-      /*
-      const newCookie = `{
-        id : '${data.id}', 
-        token: '${data.token}'
-      }`;
-      document.cookie = JSON.parse(newCookie);*/
-     // navigate("/home")
+
+      window.location.reload()
     } else {
       setError(data)
     }
@@ -59,12 +52,12 @@ export default function Login({master}) {
             <h1>Login</h1>
             <form className='form-auth'  onSubmit={onSubmit} >
                 <div className='form-group' >
-                    <label htmlFor="email">{error.email}</label>
+                    <label htmlFor="email">Email <strong>{error.email}</strong></label>
                     <input value={email} onChange={(e)=>{setEmail(e.target.value)}} placeholder="email" id="email" type="email" ></input>
                 </div>
 
                 <div className='form-group' >
-                    <label htmlFor="password">{error.password}</label>
+                    <label htmlFor="password">Mot de passe <strong>{error.password}</strong></label>
                     <input value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder="mot de passe" id="password" type="password" name='password' ></input>
                 </div>
                 

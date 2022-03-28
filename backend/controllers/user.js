@@ -18,23 +18,38 @@ exports.signup = (req, res, next) => {
                     email: req.body.email,
                     password: hash
                 };
-                connection.query('INSERT INTO `users` VALUES ("auto","'+user.email+'","'+user.password+'")', (error, results, fields) => {
+                connection.query('INSERT INTO `users` SET ?', {email: user.email, password: user.password}, (error, results, fields) => {
                     if(error == null){
-                        res.status(201).json({ 
-                            message: {
-                                name: "",
-                                firstName: "",
-                                email: "",
-                                password: ""
-                            } 
-                        }) 
+                        connection.query('SELECT * FROM `users` WHERE `email` = "'+req.body.email+'"', (error, results, fields) => {
+                            if(results.length == 1) {
+                                const user = results[0];
+                                const token = jwt.sign({},'${process.env.TOKEN}',{ expiresIn: '24h' })
+                                connection.query('UPDATE `users` SET `token` = "'+token+'" WHERE `id`='+user.id);
+                
+                                res.status(201).json({ 
+                                    error: false,
+                                    response: {
+                                        id: user.id,
+                                        token: token
+                                    } 
+                                }) 
+
+                            }else{
+                                console.log('fatal error: db connection');
+                            }
+
+                        })
+                    }else{
+                        res.status(500).json({ error })
                     }
                 })
+
             })
             .catch(error => res.status(500).json({ error }));
         }else{
             res.status(401).json({ 
-                message: {
+                error: true,
+                response: {
                     name: "",
                     firstName: "",
                     email: "Cet email est déjà utilisé, merci de choisir un autre",
@@ -81,7 +96,7 @@ exports.login = (req, res, next) => {
         //S'il n'y a pas de compte avec cette addresse email
         else if(results.length == 0) {
             res.status(401).json({ 
-                email: "Cet email est déjà utilisé, merci de choisir un autre",
+                email: "Cet email n\'existe pas, merci de choisir un autre",
                 password: ""
             })
         }

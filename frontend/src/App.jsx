@@ -1,13 +1,14 @@
 import React from 'react'
 import './assets/css/style.css';
-import { BrowserRouter, Routes, Route, Switch, Redirect, Outlet, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Cookie } from './functions';
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
-import NoPage from './pages/NoPage';
-export default function Router({master}) {
+import Redirect from './pages/Redirect';
+
+export default function App() {
 
     const user = {
         id: Cookie.get('id'),
@@ -17,18 +18,16 @@ export default function Router({master}) {
         <BrowserRouter>
           {(user.token === undefined || user.token === '')?
           <Routes>
-                <Route index element={<Login master={master} />} />
-                <Route path="login" element={<Login master={master} />} />
-                <Route path="signup" element={<Signup master={master} />} />
-                <Route path="*" element={<NoPage />} />
+                <Route index element={<Login/>} />
+                <Route path="login" element={<Login/>} />
+                <Route path="signup" element={<Signup/>} />
+                <Route path="*" element={< Redirect />} />
           </Routes>
     
           :<Routes>
             <Route index element={<Home />} />
-            <Route path="home" element={<Home master={master} />} />
-            <Route path="login" element={<Login master={master} />} />
-            <Route path="signup" element={<Signup master={master} />} />
-            <Route path="*" element={<NoPage />} />
+            <Route path="home" element={<Home/>} />
+            <Route path="*" element={< Redirect />} />
           </Routes>
         }
         </BrowserRouter>

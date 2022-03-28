@@ -1,8 +1,25 @@
 import React from 'react'
+import { API_URL } from '../utils';
+
+
+const URL_API = API_URL+'/api/sauces';
 const onSubmit = (e)=>{
     e.preventDefault();
 
-    alert('hi');
+    fetch(URL_API, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({})
+    })
+    .then((response) => response.json())
+    .then((json) => {
+        console.log(json);
+    })
+    .catch((res)=>{ console.log(res) })
+  
 }
 export default function FormPost() {
   return (

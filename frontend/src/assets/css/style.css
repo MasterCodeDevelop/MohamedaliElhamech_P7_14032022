@@ -21,6 +21,15 @@ body {
     form
 
 } */
+header {
+  height: 50px;
+  background-color: rgba(148, 146, 146, 0.767);
+}
+
+/* comment: 
+   header
+   footer
+*/
 form {
   position: relative;
   display: flex;

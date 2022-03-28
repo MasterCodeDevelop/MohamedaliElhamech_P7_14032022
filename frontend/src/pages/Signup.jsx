@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
+import { API_URL } from '../utils';
+import { Cookie } from '../functions';
 
 export default function Signup({master}) {
 
-  const URL_API = master.api.state.url+'/api/auth/signup';
+  const URL_API = API_URL+'/api/auth/signup';
 
 
   const [email, setEmail] = useState('');
@@ -14,37 +16,42 @@ export default function Signup({master}) {
 
 
 
-  const Error = ({child}) => (child === "" || child === undefined)?"":<p className='text-danger' >{child}</p>
-  //const styleError = (child) => (child === "" || child === undefined)?{color:'black'}:{color:'red'}
+const onSubmit = (e) => {
+  e.preventDefault();
   
-  useEffect(()=>{
-    /*
-    if(error.email === "" || error.email === undefined){
-      document.getElementById('email').style.color="red"
-    }*/
-  })
+  fetch(URL_API, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+        password: password      
+      })
+    })
+    .then((response) => response.json())
+    .then((json) => {
+      Response(json)
+    })
+    .catch((res)=>{ console.log(res) })
+};
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    
-    fetch(URL_API, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          password: password      
-        })
-      })
-      .then((response) => response.json())
-      .then((json) => {
-        setError(json.message)
-      })
-      .catch((res)=>{ console.log(res) })
-  };
-  const isError = (name) => (error[name])?"error":""
+function Response(data) {
+  if(data.error === true) {
+    setError(data.response)
+
+  }else if (data.error === false){
+    Cookie.set('id',data.response.id,1);
+    Cookie.set('token',data.response.token,1);
+    window.location.reload()
+
+  }else{
+    console.log('fatal error')
+    console.log(data)
+
+  }
+}
   return (
     <div className='auth'>
         <div className='auth-container' >
