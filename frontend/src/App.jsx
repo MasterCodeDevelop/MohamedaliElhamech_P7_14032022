@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import { BrowserRouter, Routes, Route, Switch, Redirect, Outlet, Link } from "react-router-dom";
 import './assets/css/style.css';
 import Login from "./pages/Login";
-import Signup from "./containers/Signup/Signup";
-import Home from "./containers/Home/Home";
+import Signup from "./pages/Signup";
+import Home from "./pages/Home";
 
 
 const Blogs = () => {

@@ -1,9 +1,9 @@
-.login {
+.auth {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    .login-container {
+    .auth-container {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -16,7 +16,10 @@
     }
 
     label {
-        color: red;
+        color: white;
+        strong {
+            color: red;
+        }
     }
     
     .link {

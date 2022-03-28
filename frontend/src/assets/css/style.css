@@ -1,49 +1,163 @@
-.form-auth {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 80vh;
-  width: 80vw;
-  margin: auto;
-  background-color: #313192;
-  border-radius: 50px;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-.form-auth .form-group {
-  display: flex;
-  flex-direction: column;
-}
-.form-auth .form-group label {
-  color: red;
-}
-.form-auth .link {
+
+body {
   color: white;
+  background-color: black;
 }
 
-/*comment : {
-
-
+/* comment {
+    base (all base styles)
+    fonts
+} */
+/* comment {
+    variables
+    /keyframes ...
 } */
 /* comment: {
     form
 
 } */
-.form-container {
+form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+form .form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+form h1 {
+  margin-bottom: 10px;
+}
+form label {
+  min-height: 20px;
+}
+form button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.form-post .form-group.row {
+  flex-direction: row;
+  justify-content: space-between;
+}
+.form-post input[type=file] {
+  display: none;
+}
+.form-post label[for=image] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  width: 80px;
+  background-color: green;
+}
+.form-post label[for=image] svg path {
+  fill: red;
+}
+.form-post button {
+  padding: 5px;
+  margin: 0;
+  width: auto;
+}
+
+/* comment: {
+    login
+    signin
+} */
+.auth {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
+.auth .auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #313192;
+  border-radius: 50px;
+  width: 600px;
+  min-height: 50vh;
+  padding: 5vw;
+}
+.auth label {
+  color: white;
+}
+.auth label strong {
+  color: red;
+}
+.auth .link {
+  background-color: orange;
+  margin-top: 16px;
+  color: white;
+}
 
-/* comment: {
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.login .login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #313192;
+  border-radius: 50px;
+  width: 600px;
+  min-height: 50vh;
+  padding: 5vw;
+}
+.login label {
+  color: red;
+}
+.login .link {
+  background-color: orange;
+  margin-top: 16px;
+  color: white;
+}
 
-} */
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.login .login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #313192;
+  border-radius: 50px;
+  width: 600px;
+  min-height: 50vh;
+  padding: 5vw;
+}
+.login label {
+  color: red;
+}
+.login .link {
+  background-color: orange;
+  margin-top: 16px;
+  color: white;
+}
+
 /* comment: {
     login
     signin
 } */
-body {
-  background-color: red;
-}
 
 /*# sourceMappingURL=style.css.map */
