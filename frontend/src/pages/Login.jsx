@@ -3,6 +3,7 @@ import {
   useNavigate,
   Link
 } from "react-router-dom";
+import { Cookie } from '../functions';
 
 export default function Login({master}) {
   const URL_API = master.api.state.url+'/api/auth/login';
@@ -11,15 +12,22 @@ export default function Login({master}) {
   const [error, setError] = useState('');
   let navigate = useNavigate();
 
- 
-  function response (data) {
-    console.log(data)
+   function response (data) {
+    
     if(data.id && data.token){
       master.user.setState({
         id: data.id,
         token: data.token
       })
-      navigate("/home")
+      Cookie.set('id',data.id,1);
+      Cookie.set('token',data.token,1);
+      /*
+      const newCookie = `{
+        id : '${data.id}', 
+        token: '${data.token}'
+      }`;
+      document.cookie = JSON.parse(newCookie);*/
+     // navigate("/home")
     } else {
       setError(data)
     }
