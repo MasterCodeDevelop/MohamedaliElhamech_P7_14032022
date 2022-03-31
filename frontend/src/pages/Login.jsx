@@ -6,7 +6,7 @@ import {
 import { API_URL } from '../utils';
 import { Cookie } from '../functions';
 
-export default function Login() {
+export default function Login({master}) {
   const URL_API = API_URL+'/api/auth/login';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,13 +14,20 @@ export default function Login() {
   let navigate = useNavigate();
 
    function response (data) {
+    console.log(data)
     
     if(data.id && data.token){
-
+      const id = data.id;
+      const token = data.token;
+      
       Cookie.set('id',data.id,1);
       Cookie.set('token',data.token,1);
 
-      window.location.reload()
+      master.session.setState({
+        id: id,
+        token: token
+      })
+
     } else {
       setError(data)
     }
@@ -31,7 +38,8 @@ export default function Login() {
     fetch(URL_API, {
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: 'test'
         },
         method: "POST",
         body: JSON.stringify({

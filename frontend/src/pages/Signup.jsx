@@ -18,7 +18,7 @@ export default function Signup({master}) {
 
 const onSubmit = (e) => {
   e.preventDefault();
-  
+  console.log(URL_API)
   fetch(URL_API, {
       headers: {
         'Accept': 'application/json',
@@ -38,13 +38,21 @@ const onSubmit = (e) => {
 };
 
 function Response(data) {
+  console.log(data)
   if(data.error === true) {
     setError(data.response)
 
   }else if (data.error === false){
-    Cookie.set('id',data.response.id,1);
-    Cookie.set('token',data.response.token,1);
-    window.location.reload()
+    const id = data.response.id;
+    const token = data.response.token;
+
+    Cookie.set('id',id,1);
+    Cookie.set('token',token,1);
+    //window.location.reload()
+    master.session.setState({
+      id: id, 
+      token: token
+    })
 
   }else{
     console.log('fatal error')

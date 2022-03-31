@@ -78,9 +78,15 @@ exports.login = (req, res, next) => {
                         password: "le mot de passe incorrect"
                     });
                 }
-                const token = jwt.sign({},'${process.env.TOKEN}',{ expiresIn: '24h' })
-                connection.query('UPDATE `users` SET `token` = "'+token+'" ', (error, results, fields) => {
 
+                let date = new Date().getTime() + (24*60*60*1000);
+                const sessionTime= date.toString();
+                console.log(sessionTime)
+                const token = jwt.sign({id: user.id},'${process.env.TOKEN}',{ expiresIn: '24h' })
+                
+                connection.query('UPDATE `users` SET `token` = "'+token+'",`sessionTime` = "'+sessionTime+'" WHERE id = '+user.id, (error, results, fields) => {
+
+                    
                     if(error == null){
                         res.status(201).json({ 
                             id: user.id,
