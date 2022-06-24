@@ -1,12 +1,13 @@
 // IMPORTS
 const express = require('express'),
 bodyParser = require('body-parser'),
-path = require('path'),
 app = express();
 
+//récupérationdes des variables d'environement dans le fichier .env
+require('dotenv').config();
 
-
-
+// connexion à la base de donée
+require('./db/mysql')
 
 app.use((req, res, next) => {
     // Permet d'accéder l'API depuis n'importe quelle origine ('*')
