@@ -1,0 +1,53 @@
+.alert {
+    position: fixed;
+    top: -100px;
+    left: 0;
+    z-index: 5;
+    height: 65px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 1rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    transform: translateY(20px);
+    
+    @media only screen and (min-width: 680px) {
+        width: 680px;
+        margin-left: calc( (100% - 680px) /2);
+    }
+    &.active {
+        animation: 3s ease-in 0s  alert;
+    }
+    svg {
+        width: 28px;
+        height: 28px;
+        fill: $green;
+    }
+    &-success {
+        color: $green;
+        background-color: #d1e7dd;
+        border-color: #badbcc;
+    }
+    &-danger {
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
+    }
+}
+
+@keyframes alert {
+    0% {
+        transform: translateY(0px);
+    }
+    25% {
+        transform: translateY(160px);
+    }
+    75% {
+        transform: translateY(160px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
