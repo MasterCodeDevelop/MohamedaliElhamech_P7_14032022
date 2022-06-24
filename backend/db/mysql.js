@@ -1,15 +1,17 @@
 var mysql = require('mysql');
-const DB = require('./DB')
-var db = mysql.createConnection({
-  host     : process.env.DB_HOST,
-  user     : process.env.DB_USER,
-  password : process.env.DB_PASSWORD,
-  database : process.env.DB_NAME
-});
-const color = {
+const DB = require('./DB'),
+color = {
     red: '\x1b[31m%s\x1b[0m',
     green: '\x1b[32m%s\x1b[0m'
+},
+config = {
+    host     : process.env.DB_HOST,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASSWORD,
+    database : process.env.DB_NAME
 }
+var db = mysql.createConnection(config);
+
 // vérifier que la base de donée est bien connecté
 db.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
     

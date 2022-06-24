@@ -1,13 +1,17 @@
 // IMPORTS
 const express = require('express'),
 bodyParser = require('body-parser'),
-app = express();
+app = express()
 
 //récupérationdes des variables d'environement dans le fichier .env
 require('dotenv').config();
 
 // connexion à la base de donée
 require('./db/mysql')
+
+// récupération des routes 
+const authRoutes = require('./routes/auth')
+
 
 app.use((req, res, next) => {
     // Permet d'accéder l'API depuis n'importe quelle origine ('*')
@@ -25,11 +29,8 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// TEST
-app.use('', (req, res, next) => {
-    res.json({
-        "test": "success"
-    })
-});
+// Enregistrement du 'router' pour toutes les demandes effectuées
+app.use('/api/auth', authRoutes);
+
 //  exports
 module.exports = app;
