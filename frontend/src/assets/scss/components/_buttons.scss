@@ -6,6 +6,8 @@
     vertical-align: middle;
     user-select: none;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
     border: 1px solid transparent;
     padding: .375rem .75rem;
@@ -53,5 +55,14 @@
     &.disabled {
         pointer-events: none;
         opacity: .65;
+    }
+    &-outline-secondary {
+        color: $gray-600;
+        background-color: inherit;
+        border-color: $gray-600;
+        &:hover {
+            color: $white;
+            background-color: $gray-600;
+        }
     }
 }

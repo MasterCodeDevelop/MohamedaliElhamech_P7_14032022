@@ -12,18 +12,21 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.TOKEN );
 
     // Extraire le 'userId' qui est à l'intérieur du token décodé
-    const userId = decodedToken.userId;
+    const { userID, isAdmin} = decodedToken;
 
     // Ajout de auth  dans la requette
-    req.auth = { userId };
+    req.auth = { userID, isAdmin };
 
-
-    // Vérification de la concordance, si l 'userId' de la requête correspond à celui du token
-    if (req.body.userId && req.body.userId !== userId) {
-      throw 'User ID non valable !';
-    } else {
+    
+    if (userID && userID != undefined){
       next();
+    } else {
+      res.status(401).json({
+        error: true,
+        message: "Requête non authentifiée ! "
+      })
     }
+    
   } catch (error) {
     res.status(401).json({ error: error | 'Requête non authentifiée !' });
   }

@@ -1,16 +1,28 @@
-/*############################## ABSTRACT ############################################*/
-@import './abstracts/variables';
+//base 
+@import './base/variables';
+@import './base/base';
+@import './base/fonts';
 
-/*############################## BASE ################################################*/
-@import './base/reset';
-
-
-/*############################## COMPONENTS ###########################################*/
+@import './all.scss';
+// components 
+@import './components/base';
 @import './components/alert';
 @import './components/buttons';
+@import './components/card';
+@import './components/comment';
+@import './components/forms';
+@import './components/icons';
+@import './components/images';
+@import './components/post';
 
-/*############################## CONTAINERS ###########################################*/
-//@import './components/'
+// containers 
+@import './container/modal';
+@import './container/background';
 
-/*############################## PAGES ###########################################*/
-@import './pages/auth';
+// layout
+@import './layouts/header';
+@import './layouts/footer';
+
+// pages
+@import './pages/index.scss';
+@import './pages/profile';

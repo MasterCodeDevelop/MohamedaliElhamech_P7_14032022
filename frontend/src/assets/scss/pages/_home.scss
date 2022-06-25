@@ -1,0 +1,15 @@
+main {
+    position: relative;
+    padding: 0 10px;
+    overflow-y: scroll;
+    height:calc(100vh - 112px);
+    background-color: green;
+    .container {
+        @media only screen and (min-width: 680px) {
+            width: 100%;
+            padding: 0 calc((100vw - 680px)/2 );
+        }
+    }
+
+
+}

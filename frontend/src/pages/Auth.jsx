@@ -1,11 +1,9 @@
-import React , { useState } from 'react'
-import { useEffect } from 'react';
-import { Login, Signup } from '../containers/index';
-
+import React,{useState} from 'react'
+import { Login, Signup, Modal, Background } from '../containers/index';
 export default function Auth({session}) {
 
     const [active, setActive] = useState(false)
-
+   
     return (
         <section className="auth" >
             <div className={`container auth__container ${active?'active':''}`}>

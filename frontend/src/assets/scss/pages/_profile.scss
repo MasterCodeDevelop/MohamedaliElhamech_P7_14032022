@@ -1,0 +1,28 @@
+.profil-form {
+    width: 100%;
+    height: 100%;
+}
+.profil-setting {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 50vw;
+    height: 50vw;
+    padding: 5vw;
+    border-radius: 30px;
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.5rem;
+        height: 80px;
+    }
+    &__body {
+        height: 100%;
+    }
+    li {
+        list-style: none;
+    }
+    li.active {
+        color: red
+    }
+}

@@ -3,7 +3,6 @@ import user from '../functions/user';
 
 export default function Login({setActive}) {
 
-
   return (
     <div className="auth__user user signinBx">
         <div className="auth__image">
@@ -40,25 +39,4 @@ export default function Login({setActive}) {
         </div>
     </div>
   )
-  /*return (
-    <div className='card' >
-      <h1>Login</h1>
-      <form className='form auth-form'  onSubmit={onSubmit} >
-        
-          <div className='form__group' >
-              <label htmlFor="login-email">Email <strong>{error.email}</strong></label>
-              <input ref={email}  placeholder="Adresse e-mail" id="login-email" type="email" ></input>
-          </div>
-
-          <div className='form__group' >
-              <label htmlFor="login-password">Mot de passe <strong>{error.password}</strong></label>
-              <input ref={password}  placeholder="Mot de passe" id="login-password" type="password" name='password' ></input>
-          </div>
-          
-          <button className='btn btn-primary' >Login</button>
-  
-      </form>
-      <button className='btn btn-success' onClick={()=>{modal.setState(!modal.state)}} >Créer un nouveau compte</button>
-    </div>
-  )*/
 }

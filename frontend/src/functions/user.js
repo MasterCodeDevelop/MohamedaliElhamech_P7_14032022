@@ -1,11 +1,52 @@
-import Alert from "./Alert";
 import Cookie from "./Cookie";
+import Alert from "./Alert";
 
 import { API_URL } from "../utils";
+
 const regex = {
     name: /^[a-zA-Z ]{0,}$/i,
     password: new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"),
     email: /^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/i
+}
+
+const login = (e) => {
+    e.preventDefault();
+    const email = e.target.querySelector('#login-email').value,
+    password = e.target.querySelector('#login-password').value;
+
+    if (email == '') return Alert.Danger('Saisir votre email');
+    if (password == '') return Alert.Danger('Saisir votre votre mot de passe');
+
+    
+    // API
+    fetch(API_URL+'/api/auth/login', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({
+                email,
+                password     
+            })
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            const { error, message} = res;
+
+            if ( error && message ) return Alert.Danger(message);
+            if ( error && !message ) {
+                console.log(res);
+                return Alert.Danger('erreur: voir la console')
+            }
+            
+            if (!error) {
+                Cookie.set('token', res.token, 1);
+                window.location.reload();
+            }
+
+        })
+        .catch( err => console.log(err))
 }
 const signup = (e) => {
     e.preventDefault();
@@ -71,49 +112,17 @@ const signup = (e) => {
         },3000)
       })
       .catch( err =>  console.log(err) )
-}   
+} 
 
-const login = (e) => {
-    e.preventDefault();
-    const email = e.target.querySelector('#login-email').value,
-    password = e.target.querySelector('#login-password').value;
-
-    if (email == '') return Alert.Danger('Saisir votre email');
-    if (password == '') return Alert.Danger('Saisir votre votre mot de passe');
-
+const logout = () => {
+    Cookie.set('token','',0);
     
-    // API
-    fetch(API_URL+'/api/auth/login', {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({
-                email,
-                password     
-            })
-        })
-        .then((response) => response.json())
-        .then((res) => {
-            const { error, message} = res;
-
-            if ( error && message ) return Alert.Danger(message);
-            if ( error && !message ) {
-                console.log(res);
-                return Alert.Danger('erreur: voir la console')
-            }
-            
-            if (!error) {
-                Cookie.set('token', res.token, 1);
-                window.location.reload();
-            }
-
-        })
-        .catch( err => console.log(err))
+    window.location.reload()
 }
+
 const user = {
-    signup,
-    login
+    login: login,
+    signup: signup,
+    logout: logout
 }
 export default user;

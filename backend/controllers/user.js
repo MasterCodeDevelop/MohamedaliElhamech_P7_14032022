@@ -73,7 +73,14 @@ exports.signup = (req, res, next) => {
                 User.get('id', {email: newUser.email}, (user) => {
 
                     // créer du token
-                    const token = jwt.sign({userID: user.id}, process.env.TOKEN ,{ expiresIn: '24h' });
+                    const token = jwt.sign(
+                        {
+                            userID : user.id,
+                            isAdmin: user.isAdmin
+                        },
+                        process.env.TOKEN,
+                        { expiresIn: '24h' }
+                    );
 
                     // tous est Ok renvoie le token
                     res.status(201).json({ token: token }) 
@@ -105,28 +112,29 @@ exports.login = (req, res, next) => {
     // recherche de l'email
     User.get('*', {email: email}, (user) => {
         // si l'email n'existe pas dans la base de sonée
-        if(!user) {
-            return res.status(401).json({
-                error: true,
-                message: "Cette email n'existe pas",
-            });
+        if(!user) return res.status(401).json({
+            error: true,
+            message: "Cette email n'existe pas",
+        });
 
-        } 
+        
 
         // Vérification du mot de passe
         bcrypt.compare(password, user.password)
         .then(valid => {
             // Si le mot de passe n'est pas valide
-            if (!valid) {
-                return res.status(401).json({
-                    error: true,
-                    message: "le mot de passe incorrect"
-                });
-            }
+            if (!valid) return res.status(401).json({
+                error: true,
+                message: "le mot de passe incorrect"
+            });
+            
 
             // création de token
             const token = jwt.sign(
-                {userId : user.id},
+                {
+                    userID : user.id,
+                    isAdmin: user.isAdmin
+                },
                 process.env.TOKEN,
                 { expiresIn: '24h' }
             );
@@ -141,13 +149,146 @@ exports.login = (req, res, next) => {
 }
 
 exports.loginByToken = (req, res) =>{
-    const userId = req.auth.userId;
+    const userID = req.auth.userID;
     
     // récupérations des informations de l'utilsateur
-    User.get(" id, email, name, familyName, poste, isAdmin, avatar ", {id: userId}, (user) => {
+    User.get(" id, email, name, familyName, poste, isAdmin, avatar ", {id: userID}, (user) => {
+
+        // vérification de l'utilsateur
+        if(!user) return res.status(401).json({
+            error: true,
+            message: "Cette email n'existe pas",
+        });
 
         //envoie les informations récupérer
         res.status(201).json({ user })    
         
     })
+}
+
+exports.updateProfil = (req, res, next) => {
+    const userID = req.auth.userID,
+    body = req.body;
+    var data = {};
+
+    // Si aucune donée n'a été envoyé
+    if (!body.name && !body.familyName && !body.poste) return res.status(401).json({
+        error: true,
+        message: "Vous devez remplir au moins un champ"
+    });
+
+    if (body.name) data['name'] = body.name;
+    if (body.familyName) data['familyName'] = body.familyName;
+    if (body.poste) data['poste'] = body.poste;
+    
+    const WHERE = {
+        id : userID
+    };
+    User.update(data, WHERE)
+
+    res.status(200).json({
+        error: false,
+        message: "profile mis à jour!"
+    })
+    
+}
+
+exports.updatePassword = (req, res) => {
+    const { password, newPassword } = req.body,
+    userID = req.auth.userID,
+    RegPass = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+
+    
+    // vérifier si tous les champs sont bien remplis
+    if ( ( !password || password == '' )  ||  ( !newPassword || newPassword == '' ) ) return res.status(401).json({
+        error: true,
+        message: " Vous devez remplir tous les champs courectement"
+    });
+
+    // vérifier si tous les champs sont bien remplis
+    if ( password == newPassword ) return res.status(401).json({
+        error: true,
+        message: "Vous devez saisir un mot de passe different "
+    });
+
+    // vérification du nouveau mot de passe
+    if ( !RegPass.test(newPassword) ) return res.status(401).json({ 
+        error : true,
+        message: "Le mot de passe doit comporter 8 caractères ou plus dont 1 lettre minuscule et majuscule, 1 nombre et 1 caractère spécial" 
+    });
+
+    // récupération des donée de l'utilisateur
+    User.get('password', {id: userID}, (user) => {
+
+        // vérification de l'utilsateur
+        if(!user) return res.status(401).json({
+            error: true,
+            message: "Cet utilsateur n'existe pas",
+        });
+
+        // vérifier si le mot de passe est coorecte
+        bcrypt.compare(password, user.password)
+        .then(valid => {
+            // Si le mot de passe n'est pas valide
+            if (!valid) return res.status(401).json({
+                error: true,
+                message: "Votre mot de passe est incorrect"
+            });
+
+            // hash le mot de passe
+            bcrypt.hash(newPassword, 10)
+            .then( hash => {
+
+                User.update(
+                    { password: hash },
+                    { id: userID }
+                );
+                res.status(200).json({ message: "Mot de passe mis à jour!" })
+            })
+            .catch(error => res.status(500).json({ error }));
+
+        })
+        .catch(error =>  res.status(500).json({ error }) )
+
+    });
+}
+
+exports.delete = (req, res) => { 
+    const userID = req.auth.userID;
+    const password = req.body.password;
+
+    // vérification du mot de passe
+    if ( !password || password == '' ) {
+        return res.status(401).json({ 
+            error : true,
+            message: "Vous devez saisir votre mot de passe" 
+        });
+    }
+
+     // récupération des donée de l'utilisateur
+     User.get('password', {id: userID}, (user) => {
+        
+        // vérification de l'utilsateur
+        if(!user) return res.status(401).json({
+            error: true,
+            message: "Ce compte n'existe pas",
+        });
+
+        // vérifier si le mot de passe est coorecte
+        bcrypt.compare(password, user.password)
+        .then(valid => {
+
+            // Si le mot de passe n'est pas valide
+            if (!valid) return res.status(401).json({
+                error: true,
+                message: "Votre mot de passe est incorrect"
+            });
+
+            User.delete(userID)
+            res.status(200).json({ message: "Votre compte est suprimé" })
+
+        })
+        .catch(error =>  res.status(500).json({ error }) )
+
+    });
 }

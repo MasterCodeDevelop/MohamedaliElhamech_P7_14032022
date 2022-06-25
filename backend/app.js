@@ -8,9 +8,11 @@ require('dotenv').config();
 
 // connexion à la base de donée
 require('./db/mysql')
+const path = require('path');
 
 // récupération des routes 
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth'),
+postRoutes = require('./routes/post');
 
 
 app.use((req, res, next) => {
@@ -29,8 +31,13 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
+
+
 // Enregistrement du 'router' pour toutes les demandes effectuées
 app.use('/api/auth', authRoutes);
+app.use('/api/post', postRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 
 //  exports
 module.exports = app;

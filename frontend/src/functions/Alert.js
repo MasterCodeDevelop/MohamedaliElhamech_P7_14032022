@@ -1,7 +1,7 @@
 
 const updateAlert = (message) => {
-    const $alert = document.querySelector('#alert');
-    const content = document.querySelector('#alert-content');
+    const $alert = document.querySelector('.alert');
+    const content = $alert.querySelector('p');
     content.textContent = message;
     $alert.classList.toggle('active')
     setTimeout(()=>{

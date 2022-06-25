@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import './assets/css/style.css'
 import Alert from './components/Alert';
+
 import Router from './Router'
 
 export default function App() {
@@ -10,7 +11,5 @@ export default function App() {
         <>
             <Router session={session} />
             <Alert/>
-        </>
-
-    )
+        </>    )
 }

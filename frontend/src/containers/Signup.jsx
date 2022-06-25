@@ -1,6 +1,6 @@
 import React from 'react';
 import user from '../functions/user'
-export default function Signup({session, modal, setActive}) {
+export default function Signup({setActive}) {
 
   return(
     <div className=" auth__user user signupBx">

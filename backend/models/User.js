@@ -23,6 +23,13 @@ class User {
       if (err) throw err
     })
   }
+
+  // suprimer un utilsateur
+  static delete (id) {
+    db.query('DELETE FROM users WHERE id = ?', id , (err)=>{
+      if (err) throw err
+    })
+}
 }
 
 module.exports = User
