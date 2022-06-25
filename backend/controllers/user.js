@@ -49,7 +49,6 @@ exports.signup = (req, res, next) => {
         name,
         familyName,
         email,
-        sessionAt: new Date().getTime()
     }
 
     // vérifier si l'email n'existe pas // il doit être unique
@@ -77,11 +76,78 @@ exports.signup = (req, res, next) => {
                     const token = jwt.sign({userID: user.id}, process.env.TOKEN ,{ expiresIn: '24h' });
 
                     // tous est Ok renvoie le token
-                    res.status(201).json({
-                        error: false,
-                        token: token
-                    }) 
+                    res.status(201).json({ token: token }) 
                 });
         })
+    })
+}
+
+
+//Connexion au compte de l'utilisateur 
+exports.login = (req, res, next) => {
+    const{ email, password } = req.body;
+    // vérifier que tous le champs email est bien remplis
+    if(email == undefined || email == '') {
+        return res.status(401).json({
+            error: true,
+            message: "veillez saisir votre email"
+        })
+    }
+
+    // vérifier que tous le champs password est bien remplis
+    if(password == undefined || password == '') {
+        return res.status(401).json({
+            error: true,
+            message:"veillez saisir votre mot de passe"
+        })
+    }
+
+    // recherche de l'email
+    User.get('*', {email: email}, (user) => {
+        // si l'email n'existe pas dans la base de sonée
+        if(!user) {
+            return res.status(401).json({
+                error: true,
+                message: "Cette email n'existe pas",
+            });
+
+        } 
+
+        // Vérification du mot de passe
+        bcrypt.compare(password, user.password)
+        .then(valid => {
+            // Si le mot de passe n'est pas valide
+            if (!valid) {
+                return res.status(401).json({
+                    error: true,
+                    message: "le mot de passe incorrect"
+                });
+            }
+
+            // création de token
+            const token = jwt.sign(
+                {userId : user.id},
+                process.env.TOKEN,
+                { expiresIn: '24h' }
+            );
+         
+            
+            res.status(200).json({ token: token }) 
+          
+        })
+        .catch(error => res.status(500).json({ error }));
+        
+    })    
+}
+
+exports.loginByToken = (req, res) =>{
+    const userId = req.auth.userId;
+    
+    // récupérations des informations de l'utilsateur
+    User.get(" id, email, name, familyName, poste, isAdmin, avatar ", {id: userId}, (user) => {
+
+        //envoie les informations récupérer
+        res.status(201).json({ user })    
+        
     })
 }

@@ -17,6 +17,12 @@ class User {
     })
   }
   
+  //Mettre à jour un ou plusieurs d
+  static update (SET, WHERE) {
+    db.query('UPDATE `users` SET ? WHERE ?', [ SET, WHERE] , (err) => {
+      if (err) throw err
+    })
+  }
 }
 
 module.exports = User

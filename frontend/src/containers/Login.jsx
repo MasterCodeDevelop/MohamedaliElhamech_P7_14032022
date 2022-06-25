@@ -1,35 +1,29 @@
-import React, {useState, useRef, useEffect} from 'react';
-//import user from '../functions/user';
+import React from 'react';
+import user from '../functions/user';
 
-export default function Login({session, setActive}) {
-  const [error, setError] = useState('');
-  const email = useRef(null)
-  const password = useRef(null)
+export default function Login({setActive}) {
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    //user.login(email.current.value, password.current.value, setError, session )
-  };
+
   return (
     <div className="auth__user user signinBx">
         <div className="auth__image">
             <img src={require('../assets/img/background.webp')} alt="login img"/>
         </div>
         <div className="auth__formBx">
-            <form className='form-auth' onSubmit={onSubmit} >
+            <form className='form-auth' onSubmit={user.login} >
               <div className="form__header">
                 <h2 className='form-auth__title'>Se connecter</h2>
               </div>
               
               <div className="form__body">
                 <div className='form__group' >
-                  <label htmlFor="login-email">Email <strong>{error.email}</strong></label>
-                  <input required ref={email}  placeholder="Adresse e-mail"  id="login-email" autoComplete="current-email" type="email" ></input>
+                  <label htmlFor="login-email">Email</label>
+                  <input required   placeholder="Adresse e-mail"  id="login-email" autoComplete="current-email" type="email" ></input>
                 </div>
 
                 <div className='form__group' >
-                    <label htmlFor="login-password">Mot de passe <strong>{error.password}</strong></label>
-                    <input required ref={password}  placeholder="Mot de passe" id="login-password" type="password" name='password' autoComplete="current-password" ></input>
+                    <label htmlFor="login-password">Mot de passe</label>
+                    <input required  placeholder="Mot de passe" id="login-password" type="password" name='password' autoComplete="current-password" ></input>
                 </div>
 
                 <div className="form__group">

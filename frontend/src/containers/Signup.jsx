@@ -2,19 +2,12 @@ import React from 'react';
 import user from '../functions/user'
 export default function Signup({session, modal, setActive}) {
 
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    user.signup(e)
-  }
-
   return(
     <div className=" auth__user user signupBx">
       <div className="auth__formBx">
 
         
-        <form className='form-auth' onSubmit={onSubmit} >
+        <form className='form-auth' onSubmit={user.signup} >
           <div className="form__header">
             <h2 className='form-auth__title'>S'inscrire</h2>
           </div>
