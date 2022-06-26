@@ -195,19 +195,19 @@ exports.updateProfil = (req, res, next) => {
         const avatar = user.avatar;
        
         // S'il y'avait d'image enregistrer
-        if (avatar == '') {
+        if (avatar =='' ) {
+           // mettre à jour les nouvelles données
+           User.update(data, WHERE);
+           res.status(200).json({ 
+               message: "profile mis à jour!"
+           });
+        } else {
             fs.unlink(`images/${avatar}`, () => {
                 // mettre à jour les nouvelles données
                 User.update(data, WHERE);
                 res.status(200).json({ 
                     message: "profile mis à jour!"
                 });
-            });
-        }else {
-            // mettre à jour les nouvelles données
-            User.update(data, WHERE);
-            res.status(200).json({ 
-                message: "profile mis à jour!"
             });
         }
     });

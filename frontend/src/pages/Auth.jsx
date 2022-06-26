@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
-import { Login, Signup, Modal, Background } from '../containers/index';
-export default function Auth({session}) {
+import { Login, Signup } from '../containers/index';
+export default function Auth() {
 
     const [active, setActive] = useState(false)
    

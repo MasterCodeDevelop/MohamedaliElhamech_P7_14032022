@@ -84,7 +84,7 @@ exports.update = (req, res, next) => {
     const id = req.body.id;
     const content = (req.body.content != undefined) ?req.body.content.replace(/[&\/\\#,+()$~%@^'!:*?<>{}]/g, ''):req.body.content;
 
-    var data = {id};
+    var data = {};
     //vérification de l'id de l'article 
     if (!id) return res.status(400).json({ 
         error: true,
@@ -116,7 +116,7 @@ exports.update = (req, res, next) => {
         // S'il y'avait d'image enregistrer
         if ( post.imageUrl == '' && !req.file) {
             // mettre à jour les nouvelles données
-            Post.update(data, WHERE, () => {
+            Post.update(data, {id}, () => {
                 res.status(200).json({ data: data });
             })
         } else {
@@ -124,7 +124,7 @@ exports.update = (req, res, next) => {
             fs.unlink(`images/${post.imageUrl}`, () => {
 
                 // mettre à jour les nouvelles données
-                Post.update(data, WHERE, () => {
+                Post.update(data, {id}, () => {
                     res.status(200).json({ data: data });
                 })
             })

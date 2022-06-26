@@ -18,12 +18,13 @@ export default function Router({session}) {
           </Routes>
         :(session.state === null)?
           <Routes>
-              <Route path="*" element={<Auth session={session}/>} />
+              <Route path="*" element={<Auth/>} />
           </Routes>
         :
           <Routes>
             <Route path="/" element={<Layout session={session} />} >
               <Route path="*" element={<Home session={session} />} />
+              <Route index element={<Home session={session} />} />
               <Route path="profile" element={<Profile session={session} />} />
             </Route>
           </Routes>

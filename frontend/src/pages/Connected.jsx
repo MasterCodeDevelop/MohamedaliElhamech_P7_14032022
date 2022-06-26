@@ -6,6 +6,6 @@ export default function Connected({session}) {
         validate.token({session})
     })
     return (
-        <div>Connected</div>
+        <div></div>
     )
 }
