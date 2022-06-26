@@ -5,11 +5,12 @@ import user from './user';
 import post from './post'
 import comment from './comment';
 import profile from './profile';
-
+import display from './display';
 
 
 export {
     auth,
+    display,
     Alert,
     Cookie, 
     user,

@@ -1,8 +1,7 @@
 import React,{ useState, useEffect, useRef } from 'react'
-import { Post, Card, Form } from '../components';
+import Post from '../components/Post';
 import Modal from '../containers/Modal';
-import { API_URL } from '../utils';
-import { profile, Alert } from '../functions';
+import { profile, display } from '../functions';
 export default function Profile({session}) {
   var data = {state:null, setState:null}; [data.state, data.setState] = useState(null)
   var openUpdate = {state: null, setState: null}; [openUpdate.state, openUpdate.setState] = useState(false);
@@ -28,7 +27,7 @@ export default function Profile({session}) {
       <div className="card card-user" style={{backgroundImage:backgrouund}} >
         <img src={require('../assets/img/background.webp')} alt="background profile" className='img-background' />
         <div className="card-content">
-          <img src={(avatar == '')?require('../assets/img/avatar.png'):API_URL+'/images/'+avatar} alt="" className='img-avatar' />
+          <img src={(avatar == '')?require('../assets/img/avatar.png'):display(avatar)} alt="" className='img-avatar' />
           <strong>{name+' '+familyName}</strong>
           <p>{poste}</p>
           <button onClick={()=>{modal.setState(true)}} className='btn btn-outline-secondary' >Modifier le Profile</button>
@@ -92,7 +91,7 @@ function Profil({page, session, modal, data}){
 
   useEffect(()=>{
     if (avatar != '' && srcImage == '') {
-      setImage(API_URL+'/images/'+avatar)
+      setImage(display(avatar))
     }
   }, [avatar, srcImage])
   return (page != 'profil')?<></>:

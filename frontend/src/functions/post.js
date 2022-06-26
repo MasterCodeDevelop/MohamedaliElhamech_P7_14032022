@@ -56,7 +56,7 @@ const getAll = ({setData}) => {
     .catch(err => console.log(err))
 }
 
-const create = ({formData, data, setData}, cb) => {
+const create = ({formData}, cb) => {
     fetch(API_URL+'/api/post', {
         method: "POST",
         headers: {
@@ -66,14 +66,12 @@ const create = ({formData, data, setData}, cb) => {
     })
     .then((response) => response.json())
     .then((res) => {
-        if (res.error) {
-            Alert.Danger(res.message)
-        } else {
-            cb()
-            const newData = data;
-            newData.push(res.data)
-            setData([...newData])
-        }
+        const { error, message, data } = res;
+        if (error && message) return Alert.Danger(message);
+        if (error && !message) return Alert.Danger('erreur, voir la console')
+
+        Alert.Success('Votre article est publuè avec succé');
+        cb(data)
     })
     .catch((res)=>{ console.log(res) })
 }

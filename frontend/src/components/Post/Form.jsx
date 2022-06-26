@@ -1,15 +1,14 @@
 import React, {useState, useRef} from 'react'
 import { useEffect } from 'react';
-import { post,  Alert } from '../../functions';
-import { API_URL } from '../../utils';
+import { post, display } from '../../functions';
 export default function Form({session, data, setData}) {
 
     const { name, familyName, avatar } = session.state,
     [content, setContent] = useState(''),
     [image, setImage] = useState(''),
-    [disabled, setDisabled] = useState('disabled')
-    const [srcImage, setSrcImage] = useState('');
-    const refImage = useRef();
+    [disabled, setDisabled] = useState('disabled'),
+    [srcImage, setSrcImage] = useState(''),
+    refImage = useRef();
 
     const onChangeImage = (e) => {
         const newImage = e.target.files
@@ -21,7 +20,6 @@ export default function Form({session, data, setData}) {
         }
     }
 
-
     const onChangeContent = (e) => {
         setContent(e.target.value)
         post.onChangeContentStyle(e)
@@ -32,11 +30,13 @@ export default function Form({session, data, setData}) {
         var formData = new FormData();
         formData.append("content", content);
         srcImage && formData.append("image", srcImage[0]);
-        post.create({formData, data, setData}, () =>{
+        post.create({formData}, (article) =>{
+            console.log(article)
+            data.push(article);
+            setData([...data])
             refImage.current.value =''
             setContent('')
             setImage('')
-            Alert.Success('Votre article est publuè avec succé')
         })
 
     }
@@ -54,7 +54,7 @@ export default function Form({session, data, setData}) {
             <form className="card form" onSubmit={onSubmit}  >
                 <div className="form__header">
                     <div className="post-form__user">
-                        <img className="post-form__avatar" src={(avatar == '')?require('../../assets/img/avatar.png'):API_URL+'/images/'+avatar} alt="" />
+                        <img className="post-form__avatar" src={(avatar == '')?require('../../assets/img/avatar.png'):display(avatar)} alt="" />
                         <p>
                             {name +"  "+familyName}
                         </p>
@@ -85,7 +85,6 @@ export default function Form({session, data, setData}) {
                 
                     <button className={`btn btn-primary ${disabled}`} type="submit">Publier</button>
                 </div>
-
                 
             </form>
         </div>
