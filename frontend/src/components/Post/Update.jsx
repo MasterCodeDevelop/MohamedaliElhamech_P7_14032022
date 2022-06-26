@@ -32,7 +32,7 @@ export default function Form({session, data, setData, modal, update}) {
         if (content != item.content){ 
             formData.append("content", content);
         }
-        if (image != API_URL+item.imageUrl) {
+        if (image != API_URL+'/images/'+item.imageUrl) {
             if(image == '') {
                 formData.append("image", null);
             } else {
@@ -56,7 +56,7 @@ export default function Form({session, data, setData, modal, update}) {
     
     useEffect(()=>{
         if(item != null) {
-            if( image != API_URL+item.imageUrl || content != item.content) {
+            if( image != API_URL+'/images/'+item.imageUrl || content != item.content) {
                 setDisabled(false)
             }else {
                 setDisabled(true)

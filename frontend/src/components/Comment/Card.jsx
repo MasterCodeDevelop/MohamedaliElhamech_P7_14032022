@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from 'react'
 import edit from '../../assets/img/edit.png';
 import basket from '../../assets/img/basket.png';
 import { post, comment } from '../../functions';
+import { API_URL } from '../../utils';
 export default function Card({ dataItem, data, index, session }) {
     const { id, user_id, post_userId, name, familyName, avatar,  createdAt} = dataItem;
     const{ id:userId, isAdmin }= session.state;
@@ -28,7 +29,7 @@ export default function Card({ dataItem, data, index, session }) {
 
       return (
         <article className='comment-card' >
-            <img src={(avatar == null)?require('../../assets/img/avatar.png'):avatar} alt={`avatar-${name}`} className="img-avatar" />
+            <img src={(avatar == '')?require('../../assets/img/avatar.png'):API_URL+'/images/'+avatar} alt={`avatar-${name}`} className="img-avatar" />
             {change?
                 <>
                     <textarea value={content} onChange={onChangeContent} name="" id={'comment-content-'+id} className='comment-content' placeholder='Ecrivez un commentaire ...'></textarea>

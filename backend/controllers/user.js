@@ -1,8 +1,10 @@
 
 // modules bcrypt et jsonwebtoken
 const bcrypt = require('bcrypt'),
-jwt = require('jsonwebtoken');
-const User = require('../models/User');
+jwt = require('jsonwebtoken'),
+User = require('../models/User'),
+fs = require("fs");
+
 
 
 // Création de nouveau compte d'utilisateur 
@@ -168,36 +170,54 @@ exports.loginByToken = (req, res) =>{
 
 exports.updateProfil = (req, res, next) => {
     const userID = req.auth.userID,
-    body = req.body;
+    { name, familyName, poste, image} = req.body,
+    WHERE = { id : userID };
     var data = {};
 
     // Si aucune donée n'a été envoyé
-    if (!body.name && !body.familyName && !body.poste) return res.status(401).json({
+    if (!name && !familyName && !poste && !req.file && image != 'delete') return res.status(401).json({
         error: true,
         message: "Vous devez remplir au moins un champ"
     });
 
-    if (body.name) data['name'] = body.name;
-    if (body.familyName) data['familyName'] = body.familyName;
-    if (body.poste) data['poste'] = body.poste;
-    
-    const WHERE = {
-        id : userID
-    };
-    User.update(data, WHERE)
+    if (name && name!='') data.name = name;
+    if (familyName && familyName!='') data.familyName = familyName;
+    if (poste && poste!='') data.poste = poste;
 
-    res.status(200).json({
-        error: false,
-        message: "profile mis à jour!"
-    })
-    
+    // vérification de imageUrl
+    if (req.file) {
+        data.avatar = req.file.filename;
+    } else if(image == 'delete') {
+        data.avatar = '';
+    }
+
+    User.get('avatar', WHERE, (user) => {
+        const avatar = user.avatar;
+       
+        // S'il y'avait d'image enregistrer
+        if (avatar == '') {
+            fs.unlink(`images/${avatar}`, () => {
+                // mettre à jour les nouvelles données
+                User.update(data, WHERE);
+                res.status(200).json({ 
+                    message: "profile mis à jour!"
+                });
+            });
+        }else {
+            // mettre à jour les nouvelles données
+            User.update(data, WHERE);
+            res.status(200).json({ 
+                message: "profile mis à jour!"
+            });
+        }
+    });
 }
 
 exports.updatePassword = (req, res) => {
     const { password, newPassword } = req.body,
     userID = req.auth.userID,
     RegPass = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-
+    
     
     // vérifier si tous les champs sont bien remplis
     if ( ( !password || password == '' )  ||  ( !newPassword || newPassword == '' ) ) return res.status(401).json({

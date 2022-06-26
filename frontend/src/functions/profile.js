@@ -21,43 +21,49 @@ const getAll = ({setData}) => {
     })
     .catch(err => console.log(err))
 }
-const updateProfil = ({e, session, closeModal, data}) => {
+const updateProfil = ({e, session, closeModal, data, image, srcImage}) => {
     const familyName = e.target.querySelector('#familyName'),
     name = e.target.querySelector('#name'),
     poste = e.target.querySelector('#poste');
-    var body = {};
-    const sessionData = session.state;
-    if (familyName.value != '') {
-        body['familyName'] = familyName.value;
-        sessionData.familyName = familyName.value;
+
+    let sessionData = session.state;
+    var formData = new FormData();
+
+    if (familyName.value != '' && familyName.value != sessionData.familyName) {
+        formData.append("familyName", familyName.value);
     }
 
-    if (name.value != '') {
-        body['name'] = name.value;
-        sessionData.name = name.value;
-    }
+    if (name.value != '' && name.value != sessionData.name) {
+        formData.append("name", name.value);
+    } 
 
-    if (poste.value != '') {
-        body['poste'] = poste.value;
-        sessionData.poste = poste.value;
+    if (poste.value != '' && poste.value != sessionData.poste) {
+        formData.append("poste", poste.value);
+    } 
+
+    if (image =='' && srcImage=='') {
+        formData.append("image", 'delete')
+    } else if (srcImage!= '') {
+        formData.append("image", srcImage[0]);
     }
 
     fetch(API_URL+'/api/auth/user/profil', {
         method: 'PUT',
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
             authorization: authorization
         },
-        body: JSON.stringify(body)
+        body: formData
     })
     .then((response) =>  response.json() )
     .then((res) => {
-        if (!res.error) {
-            session.setState(sessionData)
-            closeModal()
-            getAll({setData: data.setState});
+        const { error, message } = res;
+        if (error && message) return Alert.Danger(message);
+        if (error && !message) return Alert.Danger('erreur, voir la console')
+        if (! error) {
+            window.location.reload();
         }
+
+        
     })
     .catch(err => console.log(err))
 }
@@ -68,14 +74,11 @@ const updatePassword = ({e, modal}) => {
     newPassword = e.target.querySelector('#new-password').value;
 
     if (password == '' || newPassword =='') {
-      Alert.Danger('veillez remplir tous les champs')
+      return Alert.Danger('veillez remplir tous les champs')
     } else if ( !RegPass.test(newPassword) ) {
-      Alert.Danger('voitre nouveau mot de pass doit comporter 8 caractères ou plus dont 1 lettre minuscule et majuscule, 1 nombre et 1 caractère spécial')
+      return Alert.Danger('voitre nouveau mot de pass doit comporter 8 caractères ou plus dont 1 lettre minuscule et majuscule, 1 nombre et 1 caractère spécial')
     }
-    const body = {
-        password: password.value,
-        newPassword: newPassword.value
-    };
+
     
     fetch(API_URL+'/api/auth/user/password', {
         method: 'PUT',
@@ -84,11 +87,10 @@ const updatePassword = ({e, modal}) => {
             'Content-Type': 'application/json',
             authorization: authorization
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify({ password, newPassword })
     })
     .then((response) => response.json())
     .then((res) => {
-        console.log(res)
         const { error, message } = res;
         if (error && message) return Alert.Danger(message);
         if (error && !message) return Alert.Danger('erreur, voir la console')

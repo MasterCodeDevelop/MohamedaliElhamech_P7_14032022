@@ -39,7 +39,7 @@ export default function Card({dataItem, data, setData,  session, index, openUpda
   cancel = () => {
     setEdit(false);
     setSrcImage('');
-    if(  dataItem.imageUrl != null && dataItem.imageUrl != 'NULL' ) {
+    if(  dataItem.imageUrl != '') {
       setImage(imageUrl)
     }
     setContent(dataItem.content);
@@ -68,7 +68,7 @@ export default function Card({dataItem, data, setData,  session, index, openUpda
   useEffect(()=>{
 
     // SET IMAGE
-    if(  dataItem.imageUrl != null && dataItem.imageUrl != 'NULL' && srcImage == '' && image == null ) {
+    if(  dataItem.imageUrl != '' && srcImage == '' && image == null ) {
       setImage(imageUrl)
     }
 
@@ -83,7 +83,7 @@ export default function Card({dataItem, data, setData,  session, index, openUpda
     edit?<article className="post-card card">
       <div className="form__header">
         <div className="post-form__user">
-          <img className="post-form__avatar" src={(avatar == null)?require('../../assets/img/avatar.png'):avatar} alt="" />
+          <img className="post-form__avatar" src={(avatar == '')?require('../../assets/img/avatar.png'):API_URL+'/images/'+avatar} alt="" />
           <p>
               {name +"  "+familyName}
           </p>
@@ -122,7 +122,7 @@ export default function Card({dataItem, data, setData,  session, index, openUpda
       <div className="form__header">
         <div className="post-info">
           <div className="post-form__user">
-            <img className="post-form__avatar" src={(avatar == null)?require('../../assets/img/avatar.png'):avatar} alt="" />
+            <img className="post-form__avatar" src={(avatar == '')?require('../../assets/img/avatar.png'):API_URL+'/images/'+avatar} alt="" />
             <p>
               {name +"  "+familyName}
             </p>
@@ -136,12 +136,12 @@ export default function Card({dataItem, data, setData,  session, index, openUpda
             <ul className='card-option ' >
               { isAdmin?<></>:
               <li onClick={()=>{open(id)}} >
-                <img src={require('../../assets/img/edit.png')} alt=""  />
+                <img src={require('../../assets/img/edit.png')} alt="icon-edit"  />
                 Modifier
               </li>}
 
               <li onClick={()=>{postDelete(id, index)}} >
-                <img src={require('../../assets/img/basket.png')} alt=""  />
+                <img src={require('../../assets/img/basket.png')} alt="icon-basket"  />
                 Supprimer
               </li>
             </ul>
@@ -150,7 +150,7 @@ export default function Card({dataItem, data, setData,  session, index, openUpda
       </div>
 
       <div className="post-body">
-        <img  src={(image== null)?'':image} alt="" />
+        {(image != '')?<img  src={image} alt="" />:<></>}
         <p>{content}</p>
       </div>
 

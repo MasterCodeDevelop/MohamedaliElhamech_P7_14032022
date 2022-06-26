@@ -1167,6 +1167,20 @@ main .container {
   width: 100%;
   height: 100%;
 }
+.profil-form__img {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 120px;
+}
+.profil-form__avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
 
 .profil-setting {
   display: flex;

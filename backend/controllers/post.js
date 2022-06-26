@@ -15,17 +15,13 @@ exports.create = (req, res, next) => {
     }
 
     // vérification de content
-    if (content) {
-        data['content'] = content
-    } else {
-        data['content'] = ''
+    if (content && content!= '') {
+        data.content= content
     }
 
     // vérification de imageUrl
     if (req.file) {
-        data['imageUrl'] = req.file.filename;
-    } else {
-        data['imageUrl'] = 'NULL';
+        data.imageUrl = req.file.filename;
     }
 
     Post.create(data, (id) => {
@@ -87,11 +83,8 @@ exports.delete = (req, res, next) => {
 exports.update = (req, res, next) => {
     const id = req.body.id;
     const content = (req.body.content != undefined) ?req.body.content.replace(/[&\/\\#,+()$~%@^'!:*?<>{}]/g, ''):req.body.content;
-    var imageUrl = req.body.image;
-    var SET = {};
-    const WHERE = {
-        id: id
-    };
+
+    var data = {id};
     //vérification de l'id de l'article 
     if (!id) return res.status(400).json({ 
         error: true,
@@ -105,26 +98,13 @@ exports.update = (req, res, next) => {
     });
 
     // vérification de content
-    if (content) SET['content'] = content;
-
-
-    
+    if (content) data.content = content;
 
     // vérification de imageUrl
-    if (req.file) {
-        SET['imageUrl'] = req.file.filename;
+    if (req.file) data.imageUrl = req.file.filename;
+    
 
 
-    } else if ( imageUrl == 'null' ) {
-        SET['imageUrl'] = 'NULL';
-    }
-
-
-    const data = {
-        id: id,
-        content: content,
-        imageUrl: imageUrl
-    }
     // récupération des informations de la base de sonée s'il existe
     Post.get(id, (post) => {
 
@@ -134,9 +114,9 @@ exports.update = (req, res, next) => {
         });
 
         // S'il y'avait d'image enregistrer
-        if (post.imageUrl == 'NULL' && !req.file) {
+        if ( post.imageUrl == '' && !req.file) {
             // mettre à jour les nouvelles données
-            Post.update(SET, WHERE, () => {
+            Post.update(data, WHERE, () => {
                 res.status(200).json({ data: data });
             })
         } else {
@@ -144,7 +124,7 @@ exports.update = (req, res, next) => {
             fs.unlink(`images/${post.imageUrl}`, () => {
 
                 // mettre à jour les nouvelles données
-                Post.update(SET, WHERE, () => {
+                Post.update(data, WHERE, () => {
                     res.status(200).json({ data: data });
                 })
             })

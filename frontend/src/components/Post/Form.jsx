@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react'
 import { useEffect } from 'react';
 import { post,  Alert } from '../../functions';
+import { API_URL } from '../../utils';
 export default function Form({session, data, setData}) {
 
     const { name, familyName, avatar } = session.state,
@@ -53,7 +54,7 @@ export default function Form({session, data, setData}) {
             <form className="card form" onSubmit={onSubmit}  >
                 <div className="form__header">
                     <div className="post-form__user">
-                        <img className="post-form__avatar" src={(avatar == null)?require('../../assets/img/avatar.png'):avatar} alt="" />
+                        <img className="post-form__avatar" src={(avatar == '')?require('../../assets/img/avatar.png'):API_URL+'/images/'+avatar} alt="" />
                         <p>
                             {name +"  "+familyName}
                         </p>
