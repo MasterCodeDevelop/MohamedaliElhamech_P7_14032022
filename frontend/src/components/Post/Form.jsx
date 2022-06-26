@@ -6,14 +6,9 @@ export default function Form({session, data, setData}) {
     const { name, familyName, avatar } = session.state,
     [content, setContent] = useState(''),
     [image, setImage] = useState(''),
-    [sucess, setSucess] = useState(null),
     [disabled, setDisabled] = useState('disabled')
     const [srcImage, setSrcImage] = useState('');
     const refImage = useRef();
-    var modal = {
-        state: null,
-        setState: null
-    }; [modal.state, modal.setState] = useState(false);
 
     const onChangeImage = (e) => {
         const newImage = e.target.files
@@ -37,13 +32,9 @@ export default function Form({session, data, setData}) {
         formData.append("content", content);
         srcImage && formData.append("image", srcImage[0]);
         post.create({formData, data, setData}, () =>{
-            modal.setState(false)
-            setSucess(true)
-            setTimeout(()=>{
-                refImage.current.value =''
-                setContent('')
-                setImage('')
-            },1000)
+            refImage.current.value =''
+            setContent('')
+            setImage('')
             Alert.Success('Votre article est publuè avec succé')
         })
 
@@ -55,6 +46,7 @@ export default function Form({session, data, setData}) {
             setDisabled('')
         }
     },[content, image, disabled])
+    
     // nouvel article
     return (
         <div className="post-form">

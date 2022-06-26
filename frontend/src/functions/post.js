@@ -4,13 +4,7 @@ import { Alert } from './index';
 
 const authorization = `Bearer ${Cookie.get('token')}`
 
-const getTimeFormat = (x) => {
-    if(x < 10) {
-        return '0'+x;
-    } else {
-        return x
-    }
-}
+
 const times = (times) => {
     const newTimes = new Date().getTime();
     const defTimes = (newTimes - Number(times))/1000;
@@ -61,6 +55,7 @@ const getAll = ({setData}) => {
     })
     .catch(err => console.log(err))
 }
+
 const create = ({formData, data, setData}, cb) => {
     fetch(API_URL+'/api/post', {
         method: "POST",
@@ -74,91 +69,92 @@ const create = ({formData, data, setData}, cb) => {
         if (res.error) {
             Alert.Danger(res.message)
         } else {
+            cb()
             const newData = data;
             newData.push(res.data)
             setData([...newData])
-            cb()
         }
     })
     .catch((res)=>{ console.log(res) })
 }
-    const $delete = ({ id, index, data, setData }) => {
-        
-        fetch(API_URL+'/api/post/'+id, {
-            method: "DELETE",
-            headers: {
-                authorization: authorization
-            }
-        })
-        .then((response) => response.json())
-        .then((res) => {
-            const { error, message } = res;
-            if (error && message) return Alert.Danger(message);
-            if (error && !message) return Alert.Danger('erreur, voir la console')
 
-            let newData = data;
-            newData.splice(index,1);
-            setData([...newData])
-            Alert.Success("post supprimée")
-            
-        })
-        .catch((res)=>{ console.log(res) })
-    }
+const $delete = ({ id, index, data, setData }) => {
     
-    const update = ({index, formData, data, setData, setEdit}) => {
-        fetch(API_URL+'/api/post', {
-            method: "PUT",
-            headers: {
-                authorization: authorization
-            },
-            body: formData
-        })
-        .then((response) => response.json())
-        .then((res) => {   
-            if(res.error){
-                Alert.Danger(res.message)
-            } else {
-                
-                const newItem = res.data;
-                let newData = data;
-               
-                if (newItem.content != undefined && newData[index].content != newItem.content) {
-                    newData[index].content = newItem.content;
-                }
-                
-                if (newItem.imageUrl != '' && newData[index].imageUrl != newItem.imageUrl) {
-                    newData[index].imageUrl = newItem.imageUrl;
-                }
-                setData([...newData])
-                Alert.Success('Post modifiée');
-                setEdit(false);
-            }
-        })
-        .catch((res)=>{ console.log(res) })    
-    }
+    fetch(API_URL+'/api/post/'+id, {
+        method: "DELETE",
+        headers: {
+            authorization: authorization
+        }
+    })
+    .then((response) => response.json())
+    .then((res) => {
+        const { error, message } = res;
+        if (error && message) return Alert.Danger(message);
+        if (error && !message) return Alert.Danger('erreur, voir la console')
 
-    const like = ({id, setLikes}, cb) => {
-        fetch(`${API_URL}/api/post/${id}/like`, {
-            method: "POST",
-            headers: {
-                authorization: authorization
+        let newData = data;
+        newData.splice(index,1);
+        setData([...newData])
+        Alert.Success("post supprimée")
+        
+    })
+    .catch((res)=>{ console.log(res) })
+}
+    
+const update = ({index, formData, data, setData, setEdit}) => {
+    fetch(API_URL+'/api/post', {
+        method: "PUT",
+        headers: {
+            authorization: authorization
+        },
+        body: formData
+    })
+    .then((response) => response.json())
+    .then((res) => {   
+        if(res.error){
+            Alert.Danger(res.message)
+        } else {
+            
+            const newItem = res.data;
+            let newData = data;
+            
+            if (newItem.content != undefined && newData[index].content != newItem.content) {
+                newData[index].content = newItem.content;
             }
-        })
-        .then((response) => response.json())
-        .then((res) => {   
-            const likes = res.data;
-            setLikes([...likes])
-        })
-        .catch((res)=>{ console.log(res) })
-    }
+            
+            if (newItem.imageUrl != '' && newData[index].imageUrl != newItem.imageUrl) {
+                newData[index].imageUrl = newItem.imageUrl;
+            }
+            setData([...newData])
+            Alert.Success('Post modifiée');
+            setEdit(false);
+        }
+    })
+    .catch((res)=>{ console.log(res) })    
+}
 
-    const post = {
-        onChangeContentStyle,
-        getAll,
-        create,
-        delete: $delete,
-        update,
-        like,
-        times
-    }
+const like = ({id, setLikes}, cb) => {
+    fetch(`${API_URL}/api/post/${id}/like`, {
+        method: "POST",
+        headers: {
+            authorization: authorization
+        }
+    })
+    .then((response) => response.json())
+    .then((res) => {   
+        const likes = res.data;
+        setLikes([...likes])
+    })
+    .catch((res)=>{ console.log(res) })
+}
+
+const post = {
+    onChangeContentStyle,
+    getAll,
+    create,
+    delete: $delete,
+    update,
+    like,
+    times
+}
 export default post

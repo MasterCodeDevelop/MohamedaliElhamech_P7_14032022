@@ -9,7 +9,8 @@ exports.create = (req, res, next) => {
     if (!content && !req.file) return res.status(400).json({ error: true, message:"vous devez saisir un contenue et/ou une image" });
 
     var data = {
-        user_id: req.auth.userID
+        user_id: req.auth.userID,
+        createdAt: new Date().getTime()
     }
 
     // vérification de content

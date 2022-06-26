@@ -4,7 +4,7 @@ import basket from '../../assets/img/basket.png';
 import { post, comment } from '../../functions';
 export default function Card({ dataItem, data, index, session }) {
     const { id, user_id, post_userId, name, familyName, avatar,  createdAt} = dataItem;
-    const userId = session.state.id;
+    const{ id:userId, isAdmin }= session.state;
     const [change, setChange] = useState(false);
     const [content, setContent] = useState(dataItem.content)
     const [disabled, setDisabled] = useState(false);
@@ -28,7 +28,7 @@ export default function Card({ dataItem, data, index, session }) {
 
       return (
         <article className='comment-card' >
-            <img src={(avatar == null)?require('../../assets/img/avatar.png'):avatar} alt="" className="img-avatar" />
+            <img src={(avatar == null)?require('../../assets/img/avatar.png'):avatar} alt={`avatar-${name}`} className="img-avatar" />
             {change?
                 <>
                     <textarea value={content} onChange={onChangeContent} name="" id={'comment-content-'+id} className='comment-content' placeholder='Ecrivez un commentaire ...'></textarea>
@@ -49,13 +49,13 @@ export default function Card({ dataItem, data, index, session }) {
                     </p>
                 </div>
 
-                {(userId != user_id && userId != post_userId)?<></>:
+                {(userId != user_id && userId && post_userId && !isAdmin)?<></>:
                     <form className="post-action">
                         <input type="checkbox" id={"post-action-"+id} />
                         <label htmlFor={"post-action-"+id}>●●●</label>
                         <ul className='post__action__list' >
                             {
-                                (userId != user_id && userId == post_userId)?<></>
+                                (userId != user_id)?<></>
                                 :<li onClick={()=> { setChange(true) }} >
                                     <img src={edit} alt=""  />
                                     Modifier

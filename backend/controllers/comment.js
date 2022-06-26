@@ -67,9 +67,8 @@ exports.update = (req, res ) => {
 }
 exports.delete = (req, res) => {
     const id = Number(req.params.id);
-    const userID = req.auth.userID;
+    const { userID, isAdmin } = req.auth;
 
-    
     //Récupération des informations du commentaire s'il existe.
     Comment.getById(id, ( data, err ) => {
         // Si le commentaire n'existe pas
@@ -79,13 +78,13 @@ exports.delete = (req, res) => {
         })
 
         //Si ce n'est pas le crèateur du commentaire et n'est pas le créteur de l'article renvoie requète non autorisé
-        if ( userID != data.user_id && userID != data.post_userId ) return res.status(401).json({ 
+        if ( userID != data.user_id && userID != data.post_userId && !isAdmin ) return res.status(401).json({ 
             error: true,
             message: "Requète non autorisé, vous n'êtes pas l'auteur de ce commentaire"
         })
 
         // suprimée le commentaire
-        Comment.delete({id, userID}, (err) => {    
+        Comment.delete(id, (err) => {
             res.status(200).json({ message: "commentaire supprimée" })
         });
 

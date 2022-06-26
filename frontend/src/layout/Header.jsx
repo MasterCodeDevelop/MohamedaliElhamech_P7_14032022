@@ -24,8 +24,7 @@ export default function Header({session}) {
 
                     <ul className='header__option' >
                         <li onClick={auth.logout} >
-                            <img src={logout} alt=""  />
-                            Déconnexion
+                            <img src={logout} alt="logout"  />
                         </li>
                     </ul>
                     

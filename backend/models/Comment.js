@@ -49,15 +49,16 @@ class PostComments {
                 ON post_id = posts.id AND posts_comments.id = ${id}
         `;
 
+
         // posts.id as post_id, posts.user_id as post_userId
         db.query(req, (err, rows)=>{
             if (err) throw err
             cb(rows[0], err)
         })
     }
-    static delete ({ id, userID }, cb) {
+    static delete (id, cb) {
 
-        db.query("DELETE FROM posts_comments WHERE id = ? AND user_id = ? ", [id, userID ] , (err)=>{
+        db.query("DELETE FROM posts_comments WHERE id = ?", id , (err)=>{
             if (err) throw err
             cb(err)
         })
