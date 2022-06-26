@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import Card from './Card'
 import { post, Alert } from '../../functions';
 
-export default function FlatList({session, data, setData,  openUpdate, updateId, update}) {
+export default function FlatList({session, data, setData}) {
 
     return (
       <div className="post-flatList">
@@ -20,8 +20,6 @@ export default function FlatList({session, data, setData,  openUpdate, updateId,
                     dataItem={dataItem}
                     key={index}
                     index={index}
-                    openUpdate={openUpdate}
-                    update={update}
                     session={session}
                 />
             ))

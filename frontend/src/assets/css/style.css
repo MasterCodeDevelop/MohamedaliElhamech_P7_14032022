@@ -1,3 +1,4 @@
+/*############################## ABSTRACT ############################################*/
 :root {
   --color: #d4dcff;
   --background-color: #171933;
@@ -9,6 +10,7 @@
   --border: #2a2e5e;
 }
 
+/*############################## BASE ################################################*/
 * {
   padding: 0;
   margin: 0;
@@ -17,18 +19,6 @@
 
 html {
   overflow-x: hidden;
-  /*::-webkit-scrollbar {
-      width: 15px;
-      height: 0px;
-  }
-  ::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 4px;
-  }
-  ::-webkit-scrollbar-track {
-      background: var(--background-light);
-      padding: 1px;
-  }*/
 }
 
 body {
@@ -44,12 +34,29 @@ a {
   text-decoration: none;
 }
 
-.flatList {
+main {
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(100vh - 112px);
+  width: 100vw;
+  height: 100%;
   display: flex;
-  flex-direction: column-reverse;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 120px;
+}
+main .container {
+  width: 100%;
+  height: 100%;
+}
+@media only screen and (min-width: 680px) {
+  main .container {
+    width: 680px;
+  }
 }
 
+/*############################## COMPONENTS ###########################################*/
 .alert {
   position: fixed;
   top: -100px;
@@ -417,6 +424,12 @@ a {
 .comment-change-action .btn {
   width: 100%;
   margin-bottom: 10px;
+}
+
+.flatList {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
 }
 
 .form__group {
@@ -810,6 +823,7 @@ input[type=file] {
       width: 680px;
   }*/
 }
+/*############################## CONTAINERS ###########################################*/
 .modal {
   visibility: hidden;
   position: fixed;
@@ -849,69 +863,7 @@ input[type=file] {
   max-height: 90%;
 }
 
-@media only screen and (min-width: 425px) {
-  .background {
-    position: absolute;
-    z-index: -1;
-    width: 100vw;
-    height: 100vh;
-    background: #3586ff;
-    overflow: hidden;
-  }
-  .background .wave {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 129px;
-    background: url(../img/wave.png);
-    animation: animate-wave linear infinite;
-    /*animation-name: animate-wave;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-duration: 30s;*/
-  }
-  .background .wave:nth-child(1) {
-    animation-duration: 30s;
-    animation-delay: 0s;
-    opacity: 0.8;
-  }
-  .background .wave:nth-child(2) {
-    z-index: 0.9;
-    animation-direction: reverse;
-    animation-duration: 15s;
-    animation-delay: -5s;
-    opacity: 0.5;
-  }
-  .background .wave:nth-child(3) {
-    z-index: 0.8;
-    animation-duration: 30s;
-    animation-delay: -2s;
-    opacity: 0.2;
-  }
-  .background .wave:nth-child(4) {
-    z-index: 0.7;
-    animation-duration: 5s;
-    animation-delay: -5s;
-    opacity: 0.7;
-  }
-}
-@keyframes animate-wave {
-  0% {
-    background-position-x: 0;
-  }
-  100% {
-    background-position-x: 1280px;
-  }
-}
-@keyframes animate-wave-reverse {
-  0% {
-    background-position-x: 0;
-  }
-  100% {
-    background-position-x: 1280px;
-  }
-}
+/*############################## LAYOUTS ###########################################*/
 .header {
   position: fixed;
   z-index: 2;
@@ -991,28 +943,7 @@ footer {
   height: 100px;
 }
 
-main {
-  position: relative;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: calc(100vh - 112px);
-  width: 100vw;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 120px;
-}
-main .container {
-  width: 100%;
-  height: 100%;
-}
-@media only screen and (min-width: 680px) {
-  main .container {
-    width: 680px;
-  }
-}
-
+/*############################## PAGES ###########################################*/
 .form-auth input {
   width: 100%;
   padding: 10px;
@@ -1163,6 +1094,19 @@ main .container {
     display: none;
   }
 }
+main {
+  position: relative;
+  padding: 0 10px;
+  overflow-y: scroll;
+  height: calc(100vh - 112px);
+}
+@media only screen and (min-width: 680px) {
+  main .container {
+    width: 100%;
+    padding: 0 calc((100vw - 680px) / 2);
+  }
+}
+
 .profil-form {
   width: 100%;
   height: 100%;

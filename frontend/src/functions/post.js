@@ -116,11 +116,11 @@ const update = ({index, formData, data, setData, setEdit}) => {
             const newItem = res.data;
             let newData = data;
             
-            if (newItem.content != undefined && newData[index].content != newItem.content) {
+            if (newItem.content !== undefined && newData[index].content !== newItem.content) {
                 newData[index].content = newItem.content;
             }
             
-            if (newItem.imageUrl != '' && newData[index].imageUrl != newItem.imageUrl) {
+            if (newItem.imageUrl !== '' && newData[index].imageUrl !== newItem.imageUrl) {
                 newData[index].imageUrl = newItem.imageUrl;
             }
             setData([...newData])

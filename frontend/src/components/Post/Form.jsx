@@ -41,9 +41,9 @@ export default function Form({session, data, setData}) {
 
     }
     useEffect(()=>{
-        if (content == '' && image == '' && disabled == '') {
+        if (content === '' && image === '' && disabled === '') {
             setDisabled('disabled')
-        } else if ( ( content != '' || image != '' )  && disabled == 'disabled') {
+        } else if ( ( content !== '' || image !== '' )  && disabled === 'disabled') {
             setDisabled('')
         }
     },[content, image, disabled])
@@ -54,7 +54,7 @@ export default function Form({session, data, setData}) {
             <form className="card form" onSubmit={onSubmit}  >
                 <div className="form__header">
                     <div className="post-form__user">
-                        <img className="post-form__avatar" src={(avatar == '')?require('../../assets/img/avatar.png'):display(avatar)} alt="" />
+                        <img className="post-form__avatar" src={(avatar === '')?require('../../assets/img/avatar.png'):display(avatar)} alt="" />
                         <p>
                             {name +"  "+familyName}
                         </p>
@@ -63,7 +63,7 @@ export default function Form({session, data, setData}) {
                 
                 <div className="form__body">
                     <div className="form__group">
-                        {(image == '')?<></>:
+                        {(image === '')?<></>:
                             <>
                                 <label htmlFor="post-image" >
                                     <img className='post-form__image' src={image} alt="" />
@@ -80,7 +80,7 @@ export default function Form({session, data, setData}) {
                 <div className="form__footer">
                     <label className='post-form__add-file' htmlFor="post-image" >
                         <img src={require('../../assets/img/image.png')} alt="" />
-                        {(image == '')?'ajoutter':'changer'}
+                        {(image === '')?'ajoutter':'changer'}
                     </label>
                 
                     <button className={`btn btn-primary ${disabled}`} type="submit">Publier</button>
