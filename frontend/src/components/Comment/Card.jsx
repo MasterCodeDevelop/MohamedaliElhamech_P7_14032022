@@ -1,8 +1,8 @@
 import React,{ useEffect, useState } from 'react'
 import edit from '../../assets/img/edit.png';
 import basket from '../../assets/img/basket.png';
-import { post, comment } from '../../functions';
-import { API_URL } from '../../utils';
+import { post, comment, display } from '../../functions';
+
 export default function Card({ dataItem, data, index, session }) {
     const { id, user_id, post_userId, name, familyName, avatar,  createdAt} = dataItem;
     const{ id:userId, isAdmin }= session.state;
@@ -16,20 +16,20 @@ export default function Card({ dataItem, data, index, session }) {
       }
 
       const cancel = () => {
-          if(content != dataItem.content) { setContent(dataItem.content) };
+          if(content !== dataItem.content) { setContent(dataItem.content) };
             setChange(false);
       }
       useEffect(()=>{
-        if(content != dataItem.content && disabled == true) {
+        if(content !== dataItem.content && disabled === true) {
             setDisabled(false);
-        }else if(content == dataItem.content && disabled == false) {
+        }else if(content === dataItem.content && disabled === false) {
             setDisabled(true);
         }
       },[content, disabled, dataItem.content])
-
+      
       return (
         <article className='comment-card' >
-            <img src={(avatar == '')?require('../../assets/img/avatar.png'):API_URL+'/images/'+avatar} alt={`avatar-${name}`} className="img-avatar" />
+            <img src={(avatar === '')?require('../../assets/img/avatar.png'):display(avatar)} alt={`avatar-${name}`} className="img-avatar" />
             {change?
                 <>
                     <textarea value={content} onChange={onChangeContent} name="" id={'comment-content-'+id} className='comment-content' placeholder='Ecrivez un commentaire ...'></textarea>
@@ -49,14 +49,13 @@ export default function Card({ dataItem, data, index, session }) {
                         {content}
                     </p>
                 </div>
-
-                {(userId != user_id && userId && post_userId && !isAdmin)?<></>:
+                {(userId !== user_id && userId !== post_userId && !isAdmin)?<></>:
                     <form className="post-action">
                         <input type="checkbox" id={"post-action-"+id} />
                         <label htmlFor={"post-action-"+id}>●●●</label>
                         <ul className='post__action__list' >
                             {
-                                (userId != user_id)?<></>
+                                (userId !== user_id)?<></>
                                 :<li onClick={()=> { setChange(true) }} >
                                     <img src={edit} alt=""  />
                                     Modifier

@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from 'react'
-import { post, comment } from '../../functions';
-import { API_URL } from '../../utils';
+import { post, comment, display } from '../../functions';
+
 export default function Form({postID, data, setData, session}) {
   const { avatar } = session.state;
   const [content, setContent] = useState('')
@@ -22,7 +22,7 @@ export default function Form({postID, data, setData, session}) {
   },[content, disabled])
   return (
     <div className="comment-form">
-        <img src={(avatar=='')?require('../../assets/img/avatar.png'):API_URL+'/images/'+avatar} alt="" className="img-avatar" />
+        <img src={(avatar=='')?require('../../assets/img/avatar.png'):display(avatar)} alt="" className="img-avatar" />
         <textarea value={content} onChange={onChangeContent} name="" id="post-comment-content" placeholder='Ecrivez un commentaire ...'></textarea>
         <button onClick={()=>{ onSubmit() }} className={`btn btn-primary ${disabled}`} >Envoyer</button>
     </div>
