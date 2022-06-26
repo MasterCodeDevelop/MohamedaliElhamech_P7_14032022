@@ -1,5 +1,6 @@
 
-const Post = require('../models/Post');
+const Post = require('../models/Post'),
+fs = require("fs");
 
 
 exports.create = (req, res, next) => {
@@ -72,10 +73,13 @@ exports.delete = (req, res, next) => {
             message: "Requète non autorisé, Vous n'êtes pas l'autaur de ce poste" 
         });
 
-       // suprission de l'article
-        Post.delete(id, ()=>{
-            res.status(200).json({message: "post delete" })
-        })
+        //Suppression de ce fichier avec la methode 'unlink' du package 'fs'
+        fs.unlink(`images/${post.imageUrl}`, () => {
+            // suprission de l'article
+            Post.delete(id, ()=>{
+                res.status(200).json({message: "post delete" })
+            })
+        });
       
     })
 
@@ -103,25 +107,53 @@ exports.update = (req, res, next) => {
     // vérification de content
     if (content) SET['content'] = content;
 
+
+    
+
     // vérification de imageUrl
     if (req.file) {
         SET['imageUrl'] = req.file.filename;
+
+
     } else if ( imageUrl == 'null' ) {
         SET['imageUrl'] = 'NULL';
     }
 
 
-    
-    // mettre à jour les nouvelles données
-    Post.update(SET, WHERE, () => {
-        res.status(200).json({
-            data: {
-                id: id,
-                content: content,
-                imageUrl: imageUrl
-            }
+    const data = {
+        id: id,
+        content: content,
+        imageUrl: imageUrl
+    }
+    // récupération des informations de la base de sonée s'il existe
+    Post.get(id, (post) => {
+
+        if(!post) return res.status(400).json({ 
+            error: true, 
+            message:"Cette article n'existe pas" 
         });
-    })
+
+        // S'il y'avait d'image enregistrer
+        if (post.imageUrl == 'NULL' && !req.file) {
+            // mettre à jour les nouvelles données
+            Post.update(SET, WHERE, () => {
+                res.status(200).json({ data: data });
+            })
+        } else {
+            // S'il y a déjà une image enregistrer on commence par suprimer l'ancien immage
+            fs.unlink(`images/${post.imageUrl}`, () => {
+
+                // mettre à jour les nouvelles données
+                Post.update(SET, WHERE, () => {
+                    res.status(200).json({ data: data });
+                })
+            })
+        }
+
+    });
+
+
+ 
     
 }
 exports.getPostById = (req, res, next) => {
