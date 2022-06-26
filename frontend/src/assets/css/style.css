@@ -917,11 +917,11 @@ input[type=file] {
   z-index: 2;
   width: 100vw;
 }
-.header-nav {
-  display: flex;
-  flex-direction: column;
+.header__logout {
+  width: 40px;
+  height: 40px;
 }
-.header-group {
+.header__group {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -929,21 +929,27 @@ input[type=file] {
   width: 100%;
   padding: 0 20px;
 }
-.header-group:nth-child(1) {
+.header__nav {
+  display: flex;
+  flex-direction: column;
+}
+
+div.header__group {
   background-color: #000;
   justify-content: space-between;
   padding: 0 5vw;
 }
-.header-group:nth-child(1) h1 {
+div.header__group h1 {
   color: #fff;
 }
-.header-group:nth-child(2) {
+
+ul.header__group {
   color: #6c757d;
   background-color: #fff;
   justify-content: center;
   gap: 30px;
 }
-.header-group:nth-child(2) li {
+ul.header__group li {
   position: relative;
   list-style: none;
   height: 100%;
@@ -952,7 +958,7 @@ input[type=file] {
   align-items: center;
   transition: all 0.5s;
 }
-.header-group:nth-child(2) li::after {
+ul.header__group li::after {
   position: absolute;
   bottom: 0;
   content: "";
@@ -963,15 +969,15 @@ input[type=file] {
   opacity: 0;
   transition: all 0.7s;
 }
-.header-group:nth-child(2) li.active {
+ul.header__group li.active {
   font-weight: bold;
   color: #0d6efd;
 }
-.header-group:nth-child(2) li.active::after {
+ul.header__group li.active::after {
   width: 100%;
   opacity: 1;
 }
-.header-group:nth-child(2) li a {
+ul.header__group li a {
   width: 100%;
   height: 100%;
   display: flex;
