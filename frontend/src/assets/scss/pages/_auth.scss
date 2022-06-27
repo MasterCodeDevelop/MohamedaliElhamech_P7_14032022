@@ -1,4 +1,11 @@
 .form-auth {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 2rem;
 	input {
 		width: 100%;
 		padding: 10px;
@@ -12,7 +19,29 @@
 		letter-spacing: 1px;
 		font-weight: 300;
 	}
+	&__header {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 20px;
+	}
+
 	&__title {
+		height: 80px;
+		margin-bottom: 80px;
+		font-size: 40px;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #ffd6d7;
+	}
+	&__icon {
+		height: 80px;
+		width: 80px;
+	}
+	&__subtitle {
 		font-size: 18px;
 		font-weight: 600;
 		text-transform: uppercase;
@@ -22,61 +51,67 @@
 		margin-bottom: 10px;
 		color: #555;
 	}
-	&__change {
+	&__body {
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+		overflow-x: hidden;
+		width: 100%;
+		padding: 20px 0;
+		gap: 1rem;
+	}
+	&__footer {
 		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
 		margin-top: 20px;
-		font-size: 12px;
-		letter-spacing: 1px;
+		gap: 1rem;
 		color: #555;
-		text-transform: uppercase;
 		font-weight: 300;
-		a {
+		strong {
+			padding: .5rem;
+			text-transform: uppercase;
 			font-weight: 600;
-			text-decoration: none;
-			color: #677eff;
+			color: #42b72a;
+			cursor: pointer;
 		}
 	}
+
+	
 }
 .auth {
+	position: relative;
     min-height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: space-around;
     align-items: center;
-	strong {
-		color: red;
-	}
-	&__container {
-		position: relative;
-		width: 800px;
-		height: 500px;
-		background: #fff;
-		border-radius: 20px;
-		box-shadow: 0 15px 50px rgba(0,0,0,.1);
-		overflow: hidden;
+	overflow: hidden;
+	background-color: $white;
 
-		&.active {
+	&.active {
 
-			.signupBx {
-				pointer-events: initial;
-				.auth__formBx {
-					top: 0%;
-				}
-				.auth__image {
-					top: 0%;
-				}
+		.signupBx {
+			pointer-events: initial;
+			.auth__formBx {
+				top: 0%;
 			}
+			.auth__image {
+				top: 0%;
+			}
+		}
 
-			.signinBx {
-				.auth__formBx {
-					top: 100%;
-				}
-				.auth__image {
-					top: -100%;
-				}
+		.signinBx {
+			.auth__formBx {
+				top: 100%;
+			}
+			.auth__image {
+				top: -100%;
 			}
 		}
 	}
+
 	.signupBx {
 		pointer-events: none;
 		.auth__formBx {
@@ -107,8 +142,6 @@
 		width: 50%;
 		height: 100%;
 		border-radius: inherit;
-		//background: #ff0;
-		//border-radius: 50px;
 		transition: 0.5s;
 		img {
 			position: absolute;
@@ -130,45 +163,20 @@
 		position: relative;
 		width: 50%;
 		height: 100%;
-		//background: #fff;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		padding: 40px;
+		//padding: 40px;
 		transition: 0.5s;
 	}
-
-    .card {
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-
-    }
-    &-form {
-        width: 400px;
-    }
-
-
-
-
-
-
-
-
-
-
-
 }
 @media (max-width: 991px){
     .auth {
-        &__container {
-            max-width: 400px;
-        }
-        &__container.active &__formBx {
-            top: -100%; 
-        }
         &__formBx{
             width: 100%;
+        }
+		&.active &__formBx {
+            top: -100%; 
         }
         &__image {
 		    display: none;

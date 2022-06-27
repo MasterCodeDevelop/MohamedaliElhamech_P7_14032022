@@ -14,8 +14,8 @@ Le serveur est accessible sur `localhost` avec le port '3000' par défaut.
 
 Si tout se passe bien, les messages suivants apparaissent dans le terminal :
 
-    ? Something is already running on port 3000.
-    Would you like to run the app on another port instead?
+    Something is already running on port 3000.
+    Would you like to run the app on another port instead ? (y/n)
 
 Dans ce cas taper "y" ainsi il va se connecter sur un port libre.
 Vous povez voir le nom du ports dans la console. Copier le dans votre navigateur pour voir l'application

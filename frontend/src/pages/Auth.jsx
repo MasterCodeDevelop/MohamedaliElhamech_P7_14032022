@@ -5,11 +5,9 @@ export default function Auth() {
     const [active, setActive] = useState(false)
    
     return (
-        <section className="auth" >
-            <div className={`container auth__container ${active?'active':''}`}>
-                <Login setActive={setActive} />
-                <Signup setActive={setActive} />
-            </div>
+        <section className={`auth ${active?'active':''}`} >
+            <Login setActive={setActive} />
+            <Signup setActive={setActive} />
         </section>
     )
 

@@ -1,5 +1,8 @@
 import React from 'react';
 import user from '../functions/user'
+import icon from '../assets/img/icon-left-font-monochrome-white.svg'
+
+
 export default function Signup({setActive}) {
 
   return(
@@ -8,8 +11,12 @@ export default function Signup({setActive}) {
 
         
         <form className='form-auth' onSubmit={user.signup} >
-          <div className="form__header">
-            <h2 className='form-auth__title'>S'inscrire</h2>
+          <div className="form-auth__header">
+            <h1 className='form-auth__title'>
+              <img src={icon} className='form-auth__icon' alt='icon'/>
+              Groupomania
+            </h1>
+            <h2 className='form-auth__subtitle'>S'inscrire</h2>
           </div>
 
           <div className="form__body">
@@ -33,14 +40,13 @@ export default function Signup({setActive}) {
                 <input required  placeholder="Mot de passe" id="signup-password"  type="password" name='password' autoComplete="current-password" ></input>
             </div>
 
-            <button className='btn btn-primary' type='submit'>Submit</button>
+            <button className='btn btn-primary' type='submit'>S'inscrire</button>
           </div>
           
-          <div className="form__footer">
-            <p>Vous avez déjà un compote ?</p>
-            <button className='btn btn-success' type='button' onClick={()=>{setActive(false)}} >Se connecter</button>
+          <div className="form-auth__footer">
+            <p>Vous avez déjà de compte ?</p>
+            <strong onClick={()=>{setActive(false)}} >Se connecter</strong>
           </div>
-
         </form>
       </div>
       <div className="imgBx auth__image">

@@ -27,5 +27,8 @@
 
 /*############################## PAGES ###########################################*/
 @import './pages/auth';
-@import './pages/home';
+@import './pages/main';
 @import './pages/profile';
+
+/*############################## utils ###########################################*/
+@import './utils/mixins';

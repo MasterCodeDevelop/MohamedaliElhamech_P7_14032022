@@ -1,0 +1,10 @@
+@media only screen and (min-width: 680px) {
+    main .container {
+        padding: 0 calc((100vw - 680px)/2 );
+    }
+}
+@media only screen and (min-width: 1440px) {
+    main .container {
+        padding: 0 calc((100vw - 1024px)/2 );
+    }
+}
