@@ -24,9 +24,13 @@ const token = ({session}) => {
             const { error, user } = res;
             if ( error ) {
                 Cookie.set('token','', 1);
-                session.setState(null)
+                setTimeout(()=>{
+                    session.setState(null)
+                },2000)
             } else {
-                session.setState(user)
+                setTimeout(()=>{
+                    session.setState(user)
+                },2000)
             }
         })
         .catch(err => console.log(err))
