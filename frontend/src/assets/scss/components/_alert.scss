@@ -36,100 +36,14 @@
         border-color: #f5c2c7;
     }
 }
-/*.alert {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 100%;
-    height: 0px;
-    overflow: hidden;
-    transition: all 1s;
-    padding: 0 10px;
-    width: 100%;
-    &-success {
-        position: absolute;
-        left: 0;
-        height: 65px;
-        width: 100%;
-        transform: translateY(-100px);
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        padding: 1rem 1rem;
-        margin-left: calc( (100% - 680px) /2);
-        border: 1px solid transparent;
-        border-radius: 1rem;
-        transition: inherit;
-        @media only screen and (min-width: 680px) {
-            width: 680px;;
-        }
-    }
-    svg {
-        width: 28px;
-        height: 28px;
-        fill: $green;
-    }
-    &-success {
-        color: $green;
-        background-color: #d1e7dd;
-        border-color: #badbcc;
-    }
-    &.active {
-        height: 80px;
-        /*animation-name: alert;
-        animation-duration: 4s;/
-        .alert-success {
-            //transform: translateY(-100px);
-            /*animation-name: alert-success;
-            animation-duration: 4s;/
-            transform: translateY(10px);
-        }
-        ~ main {
-            height:  calc(100vh - 192px);
-            /*animation-name: alert-main;
-            animation-duration: 4s;/
-        }
-    }
-}
-*/
-/*
-@keyframes alert {
-    0% {
-        height: 0
-    }
-    25% {
-        height: 80px;
-    }
-    75% {
-        height: 80px;
-    }
-    100% {
-        height: 0
-    }
-}
-
-@keyframes alert-main {
-    0% {
-        height: $main-height
-    }
-    25% {
-        height:  calc(100vh - 192px);
-    }
-    75% {
-        height:  calc(100vh - 192px);
-    }
-    100% {
-        height: $main-height
-    }
-}*/
 @keyframes alert {
     0% {
         transform: translateY(0px);
     }
-    25% {
+    15% {
         transform: translateY(160px);
     }
-    75% {
+    85% {
         transform: translateY(160px);
     }
     100% {

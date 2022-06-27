@@ -79,49 +79,49 @@ export default function Card({dataItem, data, setData,  session, index}) {
     }
   },[content, image, srcImage, imageUrl, dataItem])
   return (
-    edit?<article className="post-card card">
-      <div className="form__header">
-        <div className="post-form__user">
-          <img className="post-form__avatar" src={(avatar === '')?require('../../assets/img/avatar.png'):display(avatar)} alt="" />
-          <p>
-              {name +"  "+familyName}
-          </p>
-        </div>     
-      </div>
-      <div className="post-body">
-        {
-          (image == null || image === '')?<></>:
-            <>
-              <label htmlFor={"post-update-image-"+id}>
-                <img  src={image} alt="" />
-              </label>
-              <button type='button' className='btn btn-danger post-form__delete-image' onClick={()=>{setImage(''); setSrcImage('')}} >X</button>
-            </>          
-        }
-        <input type="file" name="image" id={"post-update-image-"+id} onChange={(e)=>{onChangeImage(e)}} />
+    edit?<form className="post-form  card">
+        <div className="form__header">
+          <div className="post-form__user">
+            <img className="img-avatar" src={(avatar === '')?require('../../assets/img/avatar.png'):display(avatar)} alt="" />
+            <p>
+                {name +"  "+familyName}
+            </p>
+          </div>     
+        </div>
+        <div className="post-body">
+          {
+            (image == null || image === '')?<></>:
+              <>
+                <label htmlFor={"post-update-image-"+id}>
+                  <img  src={image} alt="" />
+                </label>
+                <button type='button' className='btn btn-danger post-form__delete-image' onClick={()=>{setImage(''); setSrcImage('')}} >X</button>
+              </>          
+          }
+          <input type="file" name="image" id={"post-update-image-"+id} onChange={(e)=>{onChangeImage(e)}} />
 
-        <textarea className="post-form__content" name="" id={"post-update-content-"+id} placeholder='Quoi de neuf ?' onChange={onChangeContent} value={content} ></textarea>
+          <textarea className="post-form__content" name="" id={"post-update-content-"+id} placeholder='Quoi de neuf ?' onChange={onChangeContent} value={content} ></textarea>
 
-      </div>
+        </div>
 
-      <div className="form__footer">
-        <label className='post-form__add-file' htmlFor={"post-update-image-"+id} >
-            <img src={require('../../assets/img/image.png')} alt="" />
-            {(image === '')?'ajoutter':'changer'}
-        </label>
+        <div className="form__footer">
+          <label className='post-form__add-file' htmlFor={"post-update-image-"+id} >
+              <img src={require('../../assets/img/image.png')} alt="" />
+              {(image === '')?'ajoutter':'changer'}
+          </label>
+      
+          <button type='button' className={`btn btn-primary ${disabled?'disabled':''}`}   onClick={() => onSubmit()} >Enregistrer</button>
+          <button type='button' className="btn btn-warning" onClick={()=> cancel() } >Annuler</button>
+        </div>
     
-        <button className={`btn btn-primary ${disabled?'disabled':''}`}   onClick={() => onSubmit()} >Enregistrer</button>
-        <button className="btn btn-warning" onClick={()=> cancel() } >Annuler</button>
-      </div>
-  
-    </article>
+      </form>
     
     :<article className="post-card card">
 
       <div className="form__header">
         <div className="post-info">
           <div className="post-form__user">
-            <img className="post-form__avatar" src={(avatar === '')?require('../../assets/img/avatar.png'):display(avatar)} alt="" />
+            <img className="img-avatar" src={(avatar === '')?require('../../assets/img/avatar.png'):display(avatar)} alt="" />
             <p>
               {name +"  "+familyName}
             </p>
