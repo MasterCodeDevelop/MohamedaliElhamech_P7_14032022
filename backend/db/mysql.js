@@ -1,5 +1,4 @@
 var mysql = require('mysql');
-const DB = require('./DB'),
 color = {
     red: '\x1b[31m%s\x1b[0m',
     green: '\x1b[32m%s\x1b[0m'
@@ -21,18 +20,11 @@ db.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
     }
 
     if (results[0].solution == 2 ) {
-        console.log(color.green,'Connexion à la base de sonée SQL réussie !')
+        console.log(color.green,'Connexion à la base de donée SQL réussie !')
     }
 });
 
 
-db.query( DB , (err, res) => {
-    if (err) {
-        throw err
-    } else {
-        console.log(color.green,'les tables sql sont OK!')
-    }
-})
 
 
 module.exports = db;
