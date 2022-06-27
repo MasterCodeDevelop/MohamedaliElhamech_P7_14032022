@@ -15,9 +15,9 @@ export default function Header({session}) {
                     </Link>
 
                     <ul className='header__option' >
-                        <li onClick={auth.logout} >
+                        <a href='#logout' onClick={auth.logout} >
                             <img className='header__icon' src={logout} alt="logout"  />
-                        </li>
+                        </a>
                     </ul>
                     
                 </div>

@@ -124,7 +124,9 @@ function Profil({page, session, modal, data}){
       <label htmlFor="poste">poste</label>
       <input type="text" name="poste" id="poste" defaultValue={poste} />
     </div>
-    <button className="btn btn-primary">Enregistrer</button>
+    <div className="form__group">
+      <button className="btn btn-primary">Enregistrer</button>
+    </div>
   </form>
 }
 const Security = ({page, modal}) => {
@@ -133,14 +135,17 @@ const Security = ({page, modal}) => {
   <form  className="profil-form" onSubmit={ e => { profile.updatePassword({e, modal})}}>
 
     <div className="form__group">
-      <label htmlFor="password"> mot de passe </label>
+      <label htmlFor="password"> Mot de passe </label>
       <input required type="password" name="password" id="password" />
     </div>
     <div className="form__group">
       <label htmlFor="new-password">Nouveau mot de passe </label>
       <input required type="password" name="new-password" id="new-password" />
     </div>
-    <button className="btn btn-primary">Enregistrer</button>
+    <div className="form__group">
+      <button className="btn btn-primary">Changer</button>
+    </div>
+    
   </form>
 }
 const Compte = ({page, modal}) => {
@@ -152,10 +157,12 @@ const Compte = ({page, modal}) => {
     </div>
     <br/>
     <div className="form__group">
-      <label htmlFor="password"> mot de passe </label>
+      <label htmlFor="password"> Mot de passe </label>
       <input required type="password" name="password" id="password" />
     </div>
-    <button className="btn btn-danger">Supprimer</button>
+    <div className="form__group">
+      <button className="btn btn-danger">Supprimer</button>
+    </div>
   </form>
 }
 

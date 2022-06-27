@@ -123,7 +123,6 @@
         
 
         .post__action__list {
-            //position: absolute;
             width: 110px;
             padding: 10px;
             border-radius: 10px;
@@ -208,19 +207,6 @@
     
 
 }
-@media only screen and (min-width: 680px) {
-    /*
-    .post-card, .form-overview {
-        width: 680px;
-    }*/
-}
-/*
-display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-*/
-
 
 .post-form {
     display: flex;
@@ -250,15 +236,6 @@ display: flex;
         outline: none;
         border: none;
     }
-   /* &__file {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        &:hover &__action {
-            opacity: 1;
-        }
-    }*/
     &__image {
         width: 100%;
         height: 100%;
