@@ -4,6 +4,7 @@ color = {
     green: '\x1b[32m%s\x1b[0m'
 },
 config = {
+    port     : process.env.DB_PORT,
     host     : process.env.DB_HOST,
     user     : process.env.DB_USER,
     password : process.env.DB_PASSWORD,

@@ -13,11 +13,14 @@ Après avoir créer les tables, vous pouvez créer un fichier .env où vous mett
 Je vous ai mis en exemple le fichier "exemmple.env".
 
 Voici les informations demandé: 
-<pre><code>DB_HOST = le host de la base de données
+<pre><code>
+    DB_PORT = le Port de la base de données par default (3306)
+    DB_HOST = le host de la base de données
     DB_USER = le nom utilsateur de la base de données
     DB_PASSWORD = mot de passe de connexion à la base de données
     DB_NAME = le nom de la base de données
-    TOKEN = une chaîne de caractères aléatoire pour sécuriser le token</code></pre>
+    TOKEN = une chaîne de caractères aléatoire pour sécuriser le token
+</code></pre>
 
 ## IMAGES ##
     Créer un dossier qui se nomme images dans la racine du dossier backend.
