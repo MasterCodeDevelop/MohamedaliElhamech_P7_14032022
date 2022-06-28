@@ -757,7 +757,7 @@ form input[type=file] {
   flex-direction: column;
 }
 .header__icon {
-  height: 45px;
+  height: 35px;
 }
 
 div.header__group {
@@ -849,7 +849,7 @@ footer {
 }
 .form-auth__title {
   height: 80px;
-  margin-bottom: 80px;
+  margin: 5vh 0;
   font-size: 40px;
   position: relative;
   display: flex;
@@ -874,8 +874,6 @@ footer {
 .form-auth__body {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
   width: 100%;
   padding: 20px 0;
   gap: 1rem;
@@ -922,6 +920,10 @@ footer {
 }
 .auth.active .signinBx .auth__image {
   top: -100%;
+}
+.auth .signinBx, .auth .signupBx {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .auth .signupBx {
   pointer-events: none;

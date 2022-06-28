@@ -1,14 +1,13 @@
 import Cookie from "./Cookie";
 import { API_URL } from "../utils";
 
-const token = ({session, setLoader}) => {
+const token = ({session}) => {
     // token récupérer depuis la cookie
     const token= Cookie.get('token');
 
     // Si le token est vide alors on renvoie vers la page Auth
     if (token == '') { 
-        session.setState(null);
-        setLoader(false)
+        session.setState(null)
     } else {
         const authorization = `Bearer ${token}`;
         fetch(API_URL+'/api/auth', {
@@ -20,16 +19,10 @@ const token = ({session, setLoader}) => {
             }
             
         })
-        .then((response) => {
-            console.log(response);
-            if (response.status === 404) {
-                setLoader(false)
-            } else {
-                response.json()
-            }
-        })
+        .then((response) =>  response.json() )
         .then((res) => {
-            /*const { error, user } = res;
+            console.log(res)
+            const { error, user } = res;
             if ( error ) {
                 Cookie.set('token','', 1);
                 setTimeout(()=>{
@@ -39,10 +32,11 @@ const token = ({session, setLoader}) => {
                 setTimeout(()=>{
                     session.setState(user)
                 },2000)
-            }*/
+            }
         })
         .catch(err => {
-            /*console.log(err)*/
+            session.setState(null)
+            console.log(err.net)
         })
     }
 

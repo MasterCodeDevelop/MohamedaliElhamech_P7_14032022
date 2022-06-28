@@ -19,7 +19,7 @@ export default function Signup({setActive}) {
             <h2 className='form-auth__subtitle'>S'inscrire</h2>
           </div>
 
-          <div className="form__body">
+          <div className="form-auth__body">
             <div className='form__group' >
                 <label htmlFor="signup-familyName">Nom</label>
                 <input required  id="signup-familyName" placeholder='Nom' type="text" ></input>

@@ -29,7 +29,7 @@
 
 	&__title {
 		height: 80px;
-		margin-bottom: 80px;
+		margin: 5vh 0;
 		font-size: 40px;
 		position: relative;
 		display: flex;
@@ -54,8 +54,6 @@
 	&__body {
 		display: flex;
 		flex-direction: column;
-		overflow-y: auto;
-		overflow-x: hidden;
 		width: 100%;
 		padding: 20px 0;
 		gap: 1rem;
@@ -112,6 +110,10 @@
 		}
 	}
 
+	.signinBx, .signupBx {
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
 	.signupBx {
 		pointer-events: none;
 		.auth__formBx {
