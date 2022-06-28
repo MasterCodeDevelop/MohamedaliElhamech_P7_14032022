@@ -314,6 +314,59 @@ a {
   width: 100%;
   margin-bottom: 10px;
 }
+.comment-action {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  gap: 0;
+  transition: all 0.3s;
+}
+.comment-action label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.6rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 0;
+  color: black;
+  cursor: pointer;
+  transition: inherit;
+}
+.comment-action label:hover {
+  background-color: #f0f2f5;
+}
+.comment__action__list {
+  width: 110px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #fff;
+  z-index: -1000;
+  opacity: 1;
+  transform: scale(0);
+  transition: transform 0.2s;
+  transition-timing-function: cubic-bezier(1, -0.03, 1, 0.01);
+}
+.comment-action input[type=checkbox] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.comment-action input[type=checkbox]:focus ~ label {
+  background-color: #f0f2f5;
+}
+.comment-action input[type=checkbox]:focus ~ ul {
+  opacity: 1;
+  z-index: 2000;
+  transform: scale(1);
+  transition: transform 0s;
+}
 
 .flatList {
   display: flex;

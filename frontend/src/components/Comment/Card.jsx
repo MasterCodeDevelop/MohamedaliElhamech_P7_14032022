@@ -50,10 +50,10 @@ export default function Card({ dataItem, data, index, session }) {
                     </p>
                 </div>
                 {(userId !== user_id && userId !== post_userId && !isAdmin)?<></>:
-                    <form className="post-action">
-                        <input type="checkbox" id={"post-action-"+id} />
-                        <label htmlFor={"post-action-"+id}>●●●</label>
-                        <ul className='post__action__list' >
+                    <form className="comment-action">
+                        <input type="checkbox" id={"comment-action-"+id} />
+                        <label htmlFor={"comment-action-"+id}>●●●</label>
+                        <ul className='comment__action__list' >
                             {
                                 (userId !== user_id)?<></>
                                 :<li onClick={()=> { setChange(true) }} >

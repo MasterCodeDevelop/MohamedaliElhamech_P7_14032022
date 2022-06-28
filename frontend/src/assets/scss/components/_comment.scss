@@ -71,4 +71,59 @@
             margin-bottom: 10px;
         }
     }
+    &-action {
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        gap: 0;
+        transition: all 0.3s;
+        label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.6rem;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 0;
+            color: black;
+            cursor: pointer;
+            transition: inherit;
+            &:hover {
+                background-color: $body-bg;
+            }
+        }
+    }
+    &__action__list {
+        width: 110px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: $white;
+        z-index: -1000;
+        opacity: 1;
+        transform: scale(0);
+        transition: transform .2s;
+        transition-timing-function: cubic-bezier(1,-0.03,1,.01);
+    }
+    &-action input[type=checkbox] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        &:focus ~ {
+            label {
+                background-color: $body-bg;
+            }
+            ul {
+                opacity: 1;
+                z-index: 2000;
+                transform: scale(1);
+                transition: transform 0s;
+            }
+        }
+    }
 }
