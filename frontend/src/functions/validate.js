@@ -21,7 +21,6 @@ const token = ({session}) => {
         })
         .then((response) =>  response.json() )
         .then((res) => {
-            console.log(res)
             const { error, user } = res;
             if ( error ) {
                 Cookie.set('token','', 1);

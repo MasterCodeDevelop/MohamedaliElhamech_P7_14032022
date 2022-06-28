@@ -84,7 +84,7 @@ exports.update = (req, res) => {
             error: true, 
             message:"Cette article n'existe pas" 
         });
-        const post = $res[0]
+        let post = $res[0]
 
         // vérfication qu'il y a au moins un contenue ou un fichier 
         if ( (content =='' || post.content=='' ) && ( (!req.file && post.imageUrl=='') || image=='delete') ) return res.status(400).json({ 
@@ -101,9 +101,14 @@ exports.update = (req, res) => {
         }
 
         // mettre à jour les nouvelles données
-        Post.update(data, { id: postID }, () => res.status(200).json({
-            message: 'Votre article est mis à jour !'
-        }));
+        Post.update(data, { id: postID }, () => {
+            if(!data.content) post.content = data.content;
+            if(!data.imageUrl) post.imageUrl = data.imageUrl;
+            res.status(200).json({
+                message: 'Votre article est mis à jour !',
+                data: post
+            })
+        });
     });
 }
 
