@@ -1,7 +1,5 @@
 const Comment =  require('../models/Comment')
 
-
-
 exports.create = (req, res, next) => {
     const postId = req.params.id,
     content = req.body.content,
