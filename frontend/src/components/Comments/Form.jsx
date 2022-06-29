@@ -6,7 +6,6 @@ export default function Form({postID, data, setData, session}) {
   const [content, setContent] = useState('')
   const [disabled, setDisabled] = useState('disabled');
   const onChangeContent = (e) => {
-    //setContent(e.target.value.replace(Ctrl_str, ''))
     setContent(e.target.value)
     post.onChangeContentStyle(e)
   }

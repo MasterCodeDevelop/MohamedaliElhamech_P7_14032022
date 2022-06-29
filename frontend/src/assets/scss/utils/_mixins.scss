@@ -3,6 +3,11 @@
         padding: 0 calc((100vw - 680px)/2 );
     }
 }
+@media only screen and (max-width: 768px) {
+    .comment__container {
+        max-width: calc(100% - 110px);
+    }
+}
 @media only screen and (min-width: 1440px) {
     main .container {
         padding: 0 calc((100vw - 1024px)/2 );

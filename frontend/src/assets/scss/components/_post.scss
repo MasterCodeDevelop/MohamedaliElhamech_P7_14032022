@@ -54,7 +54,6 @@
                 border-radius: 50%;
             }
         }
-
         &:hover &-action {
             opacity: 1;
         }
@@ -92,6 +91,9 @@
             justify-content: center;
             flex-direction: column;
         }
+    }
+    &__content {
+        overflow-wrap: break-word;
     }
     &-action {
         position: relative;
@@ -227,7 +229,7 @@
     }
     &__content {
         width: 100%;
-        height: 35px;
+        height: auto;
         resize: none;
         overflow: hidden;
         padding: 20px;

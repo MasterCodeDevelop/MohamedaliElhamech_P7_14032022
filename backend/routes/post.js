@@ -15,8 +15,8 @@ commentCtrl = require('../controllers/comment');
 /*###########  POST ROUTER ############*/
 router.post('/', auth, multer, postCtrl.create);
 router.get('/', auth, postCtrl.getAll);
-router.get('/:id', auth, multer, postCtrl.get);
 router.get('/user', auth, postCtrl.getAllByUser);
+router.get('/:id', auth, multer, postCtrl.get);
 router.put('/:id', auth, multer, postCtrl.update);
 router.delete('/:id', auth, postCtrl.delete);
 

@@ -28,41 +28,38 @@ export default function Card({ dataItem, data, index, session }) {
       },[content, disabled, dataItem.content])
       
       return (
-        <article className='comment-card' >
+        <article className='comment' >
             <img src={(avatar === '')?require('../../assets/img/avatar.png'):display(avatar)} alt={`avatar-${name}`} className="img-avatar" />
             {change?
-                <>
+               <div className="comment__container edit">
                     <textarea value={content} onChange={onChangeContent} name="" id={'comment-content-'+id} className='comment-content' placeholder='Ecrivez un commentaire ...'></textarea>
-                    <div className="comment-change-action">
+                    <div className="comment__action">
                         <button type='button' className={`btn btn-primary ${disabled?'disabled':''}`} onClick={()=>{ comment.update({id, index, content, setChange, data}) }} >Envoyer</button>
                         <button type='button' className='btn btn-danger' onClick={cancel} >Annuler</button>
                     </div>
-                </>
+               </div>
             :<>
-                <div className="comment-container">
-                    <p className="comment-user">
+                <div className="comment__container">
+                    <div className="comment__content">
                         <strong>{name}  {familyName}</strong>
-                        {post.times(createdAt)}
-                    </p>   
-                    
-                    <p className='comment-content' >
-                        {content}
-                    </p>
+                        <p>{content}</p>
+                    </div>
+                    <span>Il y a {post.times(createdAt)}</span>
                 </div>
                 {(userId !== user_id && userId !== post_userId && !isAdmin)?<></>:
-                    <form className="comment-action">
+                    <form className="comment__form-action">
                         <input type="checkbox" id={"comment-action-"+id} />
                         <label htmlFor={"comment-action-"+id}>●●●</label>
                         <ul className='comment__action__list' >
                             {
                                 (userId !== user_id)?<></>
-                                :<li onClick={()=> { setChange(true) }} >
+                                :<li className='comment__btn-action' onClick={()=> { setChange(true) }} >
                                     <img src={edit} alt=""  />
                                     Modifier
                                 </li>
                             }
                             
-                            <li onClick={()=>{ comment.delete({ id, index, data }) }} >
+                            <li className='comment__btn-action' onClick={()=>{ comment.delete({ id, index, data }) }} >
                                 <img src={basket} alt=""  />
                                 Supprimer
                             </li>

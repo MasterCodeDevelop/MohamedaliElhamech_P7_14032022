@@ -1,4 +1,4 @@
-/*###################################  POSTS  ########################################*/
+/*###################################{  POSTS  }########################################*/
 // Les imports
 const fs = require("fs"),
 Post = require('../models/Post');
@@ -58,10 +58,12 @@ exports.getAll = (req, res) => Post.all((data)=>{
 
 
 /*###############  Renvoie tous les articles qui existe de l'utilisateur ##############*/
-exports.getAllByUser = (req, res) => Post.getAllByUserId(
-    { userID: Number(req.auth.userID) },
-    data =>  res.status(200).json({ data: data })
-);
+exports.getAllByUser = (req, res) => {
+    const userID = req.auth.userID;
+    Post.getAllByUserId(userID, (data) => {
+        res.status(200).json({ data })
+    })
+}
 
 /*##############################  METTRE A JOUR L'ARTICLE ##########################*/
 exports.update = (req, res) => {

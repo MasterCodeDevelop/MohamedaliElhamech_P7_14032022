@@ -194,22 +194,18 @@ exports.updateProfil = (req, res, next) => {
     User.get('avatar', WHERE, (user) => {
         const avatar = user.avatar;
        
-        // S'il y'avait d'image enregistrer
-        if (avatar =='' ) {
-           // mettre à jour les nouvelles données
-           User.update(data, WHERE);
-           res.status(200).json({ 
-               message: "profile mis à jour!"
-           });
-        } else {
+        // supprision de l'ancienne photo si elle est exigé
+        if( avatar!=='' && (req.file || image==='delete')) {
             fs.unlink(`images/${avatar}`, () => {
-                // mettre à jour les nouvelles données
-                User.update(data, WHERE);
-                res.status(200).json({ 
-                    message: "profile mis à jour!"
-                });
-            });
+                //console.log('image supprimée')
+            })
         }
+
+        // mettre à jours= les nouvelles donées
+        User.update(data, WHERE);
+        res.status(200).json({ 
+            message: "profile mis à jour!"
+        });
     });
 }
 

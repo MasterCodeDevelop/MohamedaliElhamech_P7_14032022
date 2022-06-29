@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 
-import Comment from '../Comment/index';
+import Comments from '../Comments/index';
 import Like from './Like';
 import { display, post } from '../../functions';
 import { useEffect } from 'react';
@@ -148,7 +148,7 @@ export default function Card({dataItem, data, setData,  session, index}) {
 
       <div className="post-body">
         {(image !== '')?<img  src={image} alt="" />:<></>}
-        <p>{content}</p>
+        <p className='post__content'>{content}</p>
       </div>
 
       <div className="post-footer">
@@ -161,9 +161,7 @@ export default function Card({dataItem, data, setData,  session, index}) {
           </li>
         </ul>
 
-        <div className="comments">
-          <Comment session={session}  postID={id} />
-        </div>
+        <Comments session={session}  postID={id} />
 
       </div>
     </article>

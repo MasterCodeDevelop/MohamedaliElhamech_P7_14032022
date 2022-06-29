@@ -25,10 +25,10 @@ class Post {
         })
         
     }
-    static getAllByUserId (id, cb) {
-        db.query('SELECT posts.*,users.id as user_id, users.avatar, users.name, users.familyName FROM posts JOIN users ON user_id = users.id AND user_id = ?', id, (err, rows)=>{
-            if (err) throw err
-            cb(rows)
+    static getAllByUserId (userID, cb) {
+        db.query('SELECT posts.*,users.id as user_id, users.avatar, users.name, users.familyName FROM posts JOIN users ON user_id = users.id AND user_id = ?', userID, (err, rows)=>{
+            if (err) throw err;
+            cb(rows);
         })
     }
     static delete (id, cb) {
