@@ -32,10 +32,16 @@
     }
     &__content {
         position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+        max-width: 500px;
+        height: 80%;
+        max-height: 700px;
         z-index: 1000;
         padding: 15px;
         transform: translateY(100vh);
         transition: all 1s;
-        max-height: 90% ;
     }
 }

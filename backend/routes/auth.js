@@ -8,15 +8,6 @@ const multer = require('../middleware/multer-config');
 const userCtrl = require('../controllers/user');
 
 
-
-/*
-const express = require('express'),
-router = express.Router(),
-userCtrl = require('../controllers/user'),
-auth = require('../middleware/auth');
-const multer = require('../middleware/multer-config');
-*/
-
 router.get('/', auth, userCtrl.loginByToken);
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);

@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 
-import Comment from '../Comment/index';
+import Comments from '../Comments/index';
 import Like from './Like';
 import { display, post } from '../../functions';
 import { useEffect } from 'react';
@@ -10,7 +10,6 @@ export default function Card({dataItem, data, setData,  session, index}) {
   const  { id, user_id, name, avatar, familyName, createdAt} = dataItem,
   { id:userId , isAdmin } = session.state,
   imageUrl = display(dataItem.imageUrl),
-  [likes, setLikes] = useState(JSON.parse(dataItem.likes)),
   [edit, setEdit] = useState(false),
   [content, setContent] = useState(dataItem.content),
   [image, setImage] = useState(null),
@@ -49,16 +48,15 @@ export default function Card({dataItem, data, setData,  session, index}) {
       setEdit(false)
     } else {
       var formData = new FormData();
-      formData.append("id", id);
       formData.append("content", content);
-      if(image === '') {
-        formData.append("image", null);
+      if(image === '' && srcImage ==='') {
+        formData.append("image", 'delete');
       } else {
         srcImage && formData.append("image", srcImage[0]);
       }
       
 
-      post.update({index, formData, data, setData, setEdit});
+      post.update({id, index, formData, data, setData, setEdit});
     }
   }
   const postDelete = (id, index) => {
@@ -133,7 +131,7 @@ export default function Card({dataItem, data, setData,  session, index}) {
             <input type="checkbox" id={"post-action-"+id} />
             <label htmlFor={"post-action-"+id}>●●●</label>
             <ul className='card-option ' >
-              { isAdmin?<></>:
+              { (user_id !== userId && isAdmin)?<></>:
               <li onClick={()=>{open(id)}} >
                 <img src={require('../../assets/img/edit.png')} alt="icon-edit"  />
                 Modifier
@@ -150,22 +148,20 @@ export default function Card({dataItem, data, setData,  session, index}) {
 
       <div className="post-body">
         {(image !== '')?<img  src={image} alt="" />:<></>}
-        <p>{content}</p>
+        <p className='post__content'>{content}</p>
       </div>
 
       <div className="post-footer">
 
         <ul className='info' >
-          <Like id={id} userId={session.state.id} likes={likes} setLikes={setLikes} />
+          <Like postID={id} userID={session.state.id} />
       
           <li>
             <span>Il y a {post.times(createdAt)}</span>
           </li>
         </ul>
 
-        <div className="comments">
-          <Comment session={session}  postID={id} />
-        </div>
+        <Comments session={session}  postID={id} />
 
       </div>
     </article>

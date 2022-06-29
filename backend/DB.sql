@@ -15,12 +15,21 @@
         id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
         content VARCHAR(255) NOT NULL DEFAULT '',
         imageUrl VARCHAR(255) DEFAULT '',
-        likes LONGTEXT NOT NULL DEFAULT '[]',
         createdAt VARCHAR(50) NOT NULL,
         user_id int ,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+    
+    CREATE TABLE IF NOT EXISTS posts_likes (
+        user_id int ,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        post_id int ,
+        FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
   
+
     CREATE TABLE IF NOT EXISTS posts_comments (
         id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
         content VARCHAR(255) NOT NULL DEFAULT '',

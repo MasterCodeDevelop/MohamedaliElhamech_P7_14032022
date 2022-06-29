@@ -1,38 +1,37 @@
+/*###################################{  Comment }#######################################*/
 const Comment =  require('../models/Comment')
 
-
-
+/*##############################  CREATION D'UUN COMMENTAIRE ##########################*/
 exports.create = (req, res, next) => {
-    const postId = req.params.id,
+    const postID = Number(req.params.id),
     content = req.body.content,
-    userID = req.auth.userID
-
-    //vérification de l'id de l'article 
-    if (!postId) return res.status(400).json({ error: true, message:"manque l'ID" });
+    userID = req.auth.userID,
+    SET = {
+        content,
+        user_id: userID,
+        post_id: postID,
+        createdAt: new Date().getTime()
+    };
 
     //vérification du contenu de l'article 
-    if (!content || content =='') return res.status(400).json({ error: true, message:"Il faut saisir un contenue" });
+    if (!content || content =='') return res.status(400).json({ 
+        error: true,
+        message:"Il faut saisir un contenue"
+    });
     
-    const SET = {
-        content: content,
-        user_id: userID,
-        post_id: postId,
-        createdAt: new Date().getTime()
-    }
-    Comment.create(SET, (id) => {
-        Comment.getById(id, (Data) => {
-
-            res.status(200).json({ data: Data })
-        })
-    })
-}
-exports.getAll = (req, res, next) => {
-    const post_id = req.params.id;
-    Comment.getAllByPostId(post_id, (data) => {
-        res.status(200).json({ data: data })
-    })
+    Comment.create(SET, (id) => Comment.get(id, (data) => {
+        res.status(200).json({ data })
+    }))
 }
 
+
+/*####################  RECUPERER TOUS LES COMMMENTAIRES D'UN ARTICLE ##################*/
+exports.getAll = (req, res) => Comment.getAll(Number(req.params.id), (data) => {
+    res.status(200).json({ data})
+})
+   
+
+/*#############################  MODIFIER UN COMMENTAIRE ##########################*/
 exports.update = (req, res ) => {
     const id = Number(req.params.id);
     const content = req.body.content;
@@ -45,15 +44,15 @@ exports.update = (req, res ) => {
     });
     
     //Récupération des informations du commentaire s'il existe.
-    Comment.getById(id, ( data, err ) => {
+    Comment.get(id, (data) => {
         // Si le commentaire n'existe pas
-        if (err) return res.status(401).json({ 
-            error: err,
+        if (!data) return res.status(401).json({ 
+            error: true,
             message: "Ce commentaire n'existe pas"
         })
-
+      
         //Vérifier si c'est le même créateur
-        if ( userID != data.user_id ) return res.status(401).json({ 
+        if ( data.user_id != userID ) return res.status(401).json({ 
             error: true,
             message: "Requète non autorisé, vous n'êtes pas l'auteur de ce commentaire"
         });
@@ -65,26 +64,28 @@ exports.update = (req, res ) => {
 
     });
 }
+
+/*#############################  SUPPRIMER UN COMMENTAIRE ##########################*/
 exports.delete = (req, res) => {
     const id = Number(req.params.id);
     const { userID, isAdmin } = req.auth;
 
     //Récupération des informations du commentaire s'il existe.
-    Comment.getById(id, ( data, err ) => {
+    Comment.get(id, (data) => {
         // Si le commentaire n'existe pas
-        if (err) return res.status(401).json({ 
-            error: err,
+        if (!data) return res.status(401).json({ 
+            error: true,
             message: "Ce commentaire n'existe pas"
         })
 
-        //Si ce n'est pas le crèateur du commentaire et n'est pas le créteur de l'article renvoie requète non autorisé
+        //Si ce n'est pas le crèateur du commentaire et n'est pas le l'administrateur renvoie requète non autorisé
         if ( userID != data.user_id && userID != data.post_userId && !isAdmin ) return res.status(401).json({ 
             error: true,
             message: "Requète non autorisé, vous n'êtes pas l'auteur de ce commentaire"
         })
 
         // suprimée le commentaire
-        Comment.delete(id, (err) => {
+        Comment.delete(id, () => {
             res.status(200).json({ message: "commentaire supprimée" })
         });
 
